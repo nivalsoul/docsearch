@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Configuration status="info" strict="true" name="Log4j2Config">
+	<!-- Author: Crunchify.com -->
+	<Appenders>
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5p %c{1}:%L - %msg%n" />
+		</Console>
+
+		<RollingFile name="RollingFile" filename="log/docdive.log"
+			filepattern="${logPath}/%d{yyyyMMddHHmmss}-docdive.log">
+			<PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5p %c{1}:%L - %msg%n" />
+			<Policies>
+				<SizeBasedTriggeringPolicy size="100 MB" />
+			</Policies>
+			<DefaultRolloverStrategy max="20" />
+		</RollingFile>
+
+	</Appenders>
+	<Loggers>
+		<Root level="info">
+			<AppenderRef ref="Console" />
+			<!-- <AppenderRef ref="RollingFile" /> -->
+		</Root>
+	</Loggers>
+</Configuration>
+
+

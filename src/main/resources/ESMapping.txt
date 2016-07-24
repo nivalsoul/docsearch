@@ -1,0 +1,148 @@
+#category
+curl -XPOST http://172.16.50.81:19200/docdive/category/_mapping -d'
+{
+    "category": {
+        "_all": {
+            "analyzer": "ik_max_word",
+            "search_analyzer": "ik_max_word",
+            "term_vector": "no",
+            "store": "false"
+        },
+        "properties": {
+            "tenant_id": {
+                "type": "string",
+				"index": "not_analyzed"
+            },
+            "user_id": {
+                "type": "string",
+				"index": "not_analyzed"
+            },
+            "parent_id": {
+                "type": "string",
+				"index": "not_analyzed"
+            },
+            "name": {
+                "type": "string",
+				"index": "not_analyzed"
+            },
+            "type": {
+                "type": "string",
+				"index": "not_analyzed"
+            }
+        }
+    }
+}'
+
+============================================================
+
+#document
+curl -XPOST http://172.16.50.81:19200/docdive/document/_mapping -d'
+{
+    "document": {
+        "_all": {
+            "analyzer": "ik_max_word",
+            "search_analyzer": "ik_max_word",
+            "term_vector": "no",
+            "store": "false"
+        },
+        "properties": {
+		    "tenant_id": {
+                "type": "string",
+				"index": "not_analyzed"
+            },
+            "category_id": {
+                "type": "string",
+				"index": "not_analyzed"
+            },
+            "user_id": {
+                "type": "string",
+				"index": "not_analyzed"
+            },
+            "user_name": {
+                "type": "string",
+				"index": "not_analyzed"
+            },
+            "format": {
+                "type": "string",
+				"index": "not_analyzed"
+            },
+            "status": {
+                "type": "string",
+				"index": "not_analyzed"
+            },
+            "file_hash": {
+                "type": "string",
+				"index": "not_analyzed"
+            },
+            "created_at": {
+		        "type": "date",
+		        "format": "yyyy-MM-dd HH:mm:ss"
+		    },
+            "updated_at": {
+		        "type": "date",
+		        "format": "yyyy-MM-dd HH:mm:ss"
+		    },
+            "file_name": {
+                "type": "string",
+                "index": "not_analyzed"
+            },
+            "title": {
+                "type": "string",
+                "store": "no",
+                "term_vector": "with_positions_offsets",
+                "analyzer": "ik_max_word",
+                "search_analyzer": "ik_max_word",
+                "include_in_all": "true",
+                "boost": 8,
+	            "fields": {
+		            "raw": {
+		                "type": "string",
+		                "index": "not_analyzed"
+		            }
+		        }
+            },
+			"description": {
+                "type": "string",
+                "store": "no",
+                "term_vector": "with_positions_offsets",
+                "analyzer": "ik_max_word",
+                "search_analyzer": "ik_max_word",
+                "include_in_all": "true",
+                "boost": 8
+            }
+        }
+    }
+}'
+
+
+#pages
+curl -XPOST http://172.16.50.81:19200/docdive/pages/_mapping -d'
+{
+	"pages": {
+		"_all": {
+			"analyzer": "ik_max_word",
+			"search_analyzer": "ik_max_word",
+			"term_vector": "no",
+			"store": "false"
+		},
+		"properties": {
+		    "document_id": {
+                "type": "string",
+				"index": "not_analyzed"
+            },
+			"page": {
+				"type": "integer"
+			},
+			"text": {
+				"type": "string",
+				"store": "no",
+				"term_vector": "with_positions_offsets",
+				"analyzer": "ik_max_word",
+				"search_analyzer": "ik_max_word",
+				"include_in_all": "true",
+				"boost": 8
+			}
+		}
+	}
+}'
+

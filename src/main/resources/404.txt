@@ -1,0 +1,5 @@
+<h1 style="text-align: center; font-size: 48px; color: red">404 Error</h1>
+<h1>404 Not Found</h1>
+<strong>没有找到相关内容...</strong>
+<br>
+<br>
