@@ -1,0 +1,42 @@
+<div class="modal-header">
+    <h3 class="modal-title">修改文档信息</h3>
+</div>
+<div class="modal-body clearfix">
+    <div class="form-group clearfix">
+        <label class="pull-left text-right" style="width: 80px">名称：<span class="text-danger">*</span></label>
+        <div class="pull-left" style="width: 440px">
+            <!--<input id="fileName" class="form-control" placeholder="请输入1-128个字符的文件名称"
+                       cc-validate="" cc-validate-reg="^[\u4E00-\u9FA5\w-\d \.\d()（）]{1,128}$"
+                       cc-validate-errmsg="允许中文、字母、数字、空格、中英文小括号和.-_，长度在1-128之间"
+                       ng-model="file.title" cc-validate-model="file.title"> 问题多，不用了-->
+            <input id="fileName" class="form-control"  ng-model="file.title"
+                   maxlength="128" placeholder="请输入1-128个字符的文件名称">
+        </div>
+    </div>
+    <div class="form-group clearfix">
+        <label class="pull-left text-right" style="width: 80px">文件夹：<span class="text-danger">*</span></label>
+        <div class="pull-left" style="width: 440px">
+            <select class="form-control" ng-model="file.category_id"
+                    ng-options="folder._id as folder.name for folder in folders">
+            </select>
+        </div>
+    </div>
+    <div class="form-group clearfix">
+        <label class="pull-left text-right" style="width: 80px">租户：<span class="text-danger">*</span></label>
+        <div class="pull-left" style="width: 440px">
+            <select class="form-control" ng-model="file.tenant_id"
+                    ng-options="tenant.tenantId as tenant.tenantName for tenant in tenantArr">
+            </select>
+        </div>
+    </div>
+    <div class="form-group clearfix">
+        <label class="pull-left text-right" style="width: 80px">描述：</label>
+        <div class="pull-left" style="width:440px">
+            <textarea class="form-control" rows="3" ng-model="file.description"></textarea>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="saveDoc()">保存</button>
+    <button class="btn btn-default" ng-click="cancel()">取消</button>
+</div>

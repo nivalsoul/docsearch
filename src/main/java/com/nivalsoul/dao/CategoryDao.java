@@ -11,7 +11,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
-import com.nivalsoul.domain.Category;
+import com.nivalsoul.model.Category;
 import com.nivalsoul.utils.ESUtil;
 
 @Component

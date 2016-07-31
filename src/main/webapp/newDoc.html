@@ -1,0 +1,145 @@
+<div class="modal-header">
+    <h3 class="modal-title">上传文件</h3>
+</div>
+<div class="modal-body clearfix">
+    <div class="pull-left m-r-10" style="width: 320px">
+        <table class="table b table-list">
+            <thead>
+            <th>文件名称</th>
+            <th>状态</th>
+            <th style="width: 54px">操作</th>
+            </thead>
+            <tbody>
+            <tr ng-repeat="fileObj in fileArr" style="cursor:pointer">
+                <td ng-click="chooseFile(fileObj)">{{fileObj.title}}</td>
+                <td>
+                    <span class="label label-success" ng-if="fileObj.status=='success'">上传成功</span>
+                    <span class="label label-danger" ng-if="fileObj.status=='error'">上传失败</span>
+                </td>
+                <td>
+                    <a class="text-danger m-l-5" tooltip="删除" ng-click="delFile(fileObj)"
+                       data-confirm="{{'确认删除文件:' + fileObj.title +'?'}}"><i class="fa fa-times"></i></a>
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="3" class="text-center" style="padding: 0">
+                    <a ng-click="newUpload()" class="btn btn-default btn-lg" style="width: 100%;border: none"
+                       data-ng-disabled="!file.folder_id||!file.tenant_id">
+                        <i class="fa fa-plus m-r-5 text-info"></i>新增上传
+                    </a></td>
+            </tr>
+            </tbody>
+        </table>
+        <p class="text-muted font-12">
+
+            *在右侧表单上传文件、填写表单过后;<br> &nbsp;您可以点击“新增上传”继续添加。</p>
+    </div>
+    <form class="pull-left" name="newContainer">
+        <div class="form-group clearfix" ng-hide="fileUploaded">
+            <label class="pull-left text-right" style="width: 80px">文件：<span class="text-danger">*</span></label>
+            <div class="pull-left" style="width: 440px">
+                <button class="btn btn-primary">
+                    <i class="fa fa-upload"></i> 选择文件
+                    <div style="position: absolute;    opacity: 0; top: 15px; left:422px; width: 150px; height: 38px; overflow: hidden; bottom: auto; right: auto;">
+                        <input type="file" nv-file-select="" style="height:38px" uploader="file.uploader">
+                    </div>
+                </button>
+                <table class="table m-t-10" style="margin-bottom: 0">
+                    <thead>
+                    <tr>
+                        <th width="50%">名称</th>
+                        <th ng-show="file.uploader.isHTML5">大小</th>
+                        <th ng-show="file.uploader.isHTML5">进度</th>
+                        <th>状态</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="item in file.uploader.queue">
+                        <td><strong>{{ item.file.name }}</strong></td>
+                        <td ng-show="file.uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+                        <td ng-show="file.uploader.isHTML5">
+                            <div class="progress" style="margin-bottom: 0;">
+                                <div class="progress-bar" role="progressbar"
+                                     ng-style="{ 'width': item.progress + '%' }"></div>
+                            </div>
+                        </td>
+                        <td class="text-center">
+                            <span ng-show="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+                            <span ng-show="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                            <span ng-show="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+                        </td>
+                        <td nowrap>
+                            <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()"
+                                    ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+                                <span class="glyphicon glyphicon-upload"></span> 上传
+                            </button>
+                            <button type="button" class="btn btn-warning btn-xs" ng-click="item.cancel()"
+                                    ng-disabled="!item.isUploading">
+                                <span class="glyphicon glyphicon-ban-circle"></span> 取消
+                            </button>
+                            <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">
+                                <span class="glyphicon glyphicon-trash"></span> 删除
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="form-group clearfix" ng-show="fileUploaded">
+            <label class="pull-left text-right" style="width: 80px">文件名：</label>
+            <div class="pull-left" style="width: 440px">
+                {{file.title}}
+            </div>
+        </div>
+        <div class="form-group clearfix">
+            <label class="pull-left text-right" style="width: 80px">进度：</label>
+            <div class="pull-left" style="width: 440px">
+                <div class="progress bg-light dker" style="">
+                    <div class="progress-bar progress-bar-striped bg-success" role="progressbar"
+                         ng-style="{ 'width': file.uploader.progress + '%' }"></div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group clearfix">
+            <label class="pull-left text-right" style="width: 80px">名称：<span class="text-danger">*</span></label>
+            <div class="pull-left" style="width: 440px">
+                <!--<input id="fileName" class="form-control" placeholder="请输入1-128个字符的文件名称"
+                       cc-validate="" cc-validate-reg="^[\u4E00-\u9FA5\w-\d \.\d()（）]{1,128}$"
+                       cc-validate-errmsg="允许中文、字母、数字、空格、中英文小括号和.-_，长度在1-128之间"
+                       ng-model="file.title" cc-validate-model="file.title"> 问题多，不用了-->
+                <input id="fileName" class="form-control"  ng-model="file.title"
+                       maxlength="128" placeholder="请输入1-128个字符的文件名称">
+            </div>
+        </div>
+        <div class="form-group clearfix">
+            <label class="pull-left text-right" style="width: 80px">文件夹：<span class="text-danger">*</span></label>
+            <div class="pull-left" style="width: 440px">
+                <select class="form-control" ng-model="file.folder_id"
+                        ng-options="folder._id as folder.name for folder in folders">
+                </select>
+            </div>
+        </div>
+        <div class="form-group clearfix">
+            <label class="pull-left text-right" style="width: 80px">租户：<span class="text-danger">*</span></label>
+            <div class="pull-left" style="width: 440px">
+                <select class="form-control" ng-model="file.tenant_id"
+                        ng-options="tenant.tenantId as tenant.tenantName for tenant in tenantArr">
+                </select>
+            </div>
+        </div>
+        <div class="form-group clearfix">
+            <label class="pull-left text-right" style="width: 80px">描述：</label>
+            <div class="pull-left" style="width:440px">
+                <textarea class="form-control" rows="3" ng-model="file.description"></textarea>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="saveDoc()"
+            data-ng-disabled="folders.length==0">保存</button>
+    <button class="btn btn-default" ng-click="cancel()">取消</button>
+</div>

@@ -1,0 +1,188 @@
+<div class="app-content-body fade-in-up" >
+    <div class="hbox hbox-auto-xs hbox-auto-sm bg-light">
+        <!-- left -->
+        <div class="col w-sm">
+            <div class="cell scrollable hover" id="leftSearch">
+                <div class="list-group list-group-lg">
+                    <div class="b-r p-l-20">
+                        <h4 class="font-14 no-margin">部门</h4>
+                    </div>
+                    <a class="list-group-item  hover-anchor b-a"  ng-class="{'selected':dept.selected}" ng-repeat="dept in depts"
+                       ng-click="searchByTenant(dept)">
+                        <span class="font-14 text-black  m-l-xs text-ellipsis"
+                              style="width: 180px;display: inline-block;" tooltip="{{dept.tenant_name}}">{{dept.tenant_name}}</span>
+                        <div class="text-muted">{{dept.document_count}}个文档</div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- right -->
+        <div class="col panel" ng-click="searchPageClick($event)" >
+            <div class="panel-body">
+                <h4 class="text-center">{{selectedDept.tenant_name}}-所有文档</h4>
+                <!-- 搜索输入框 -->
+                <div class="searchInput"  ng-class="{'focus':inputIsFocus}">
+                    <i class="fa fa-search"></i>
+                    <div id="searchDiv" class="clearfix" style="padding: 5px 0;">
+                        <div class="searchTag" ng-class="{'tag_selected':item.selected}"
+                             ng-repeat="item in inputTagArr" >
+                            <a ng-click="removeTag(item.id)"> <i class="fa fa-times-circle"></i></a>
+                            <span class="font-14 text-muted" ng-click="selectLabel(item)" style="cursor: pointer">{{item.label}}:</span>
+                            <input id="{{item.id}}" type="text" class="noborderInput font-14" ng-model='item.value'
+                                   style="font-family: 宋体; " data-ng-change="changeLen(item.id)"
+                                   ng-click="selectLabel(item)" ng-blur="blurLabel()"
+                                   ng-keyup="getWidth(item.value,$event)" ng-keydown="getWidth(item.value,$event)">
+                            <div style="opacity: 0; top: -9999px;left: -9999px; position: absolute;white-space: nowrap;">{{item.value}}</div>
+                        </div>
+                        <input class="noborderInput font-14" ng-model="mainInput" id="mainInput"
+                               style="width: 98%; font-family: 宋体;" ng-show="showMainInput==true"
+                               ng-click="inputFocus()" ng-dblclick="showFilter=false" ng-keyup="searchByCnd($event)">
+                    </div>
+                    <a style="position: absolute;right: 30px;top: 65px;" ng-click="clearTags()"> <i class="fa fa-times"></i></a>
+                </div>
+
+                <!-- 搜索弹出菜单 -->
+                <div class="filterBox" ng-show="showFilter==true">
+                    <ul>
+                        <li ng-click="chooseKey('title','标题')"><a href="#">标题</a></li>
+                        <li ng-click="chooseKey('text','内容')"><a href="#">内容</a></li>
+                        <li ng-click="chooseKey('user_name','用户名')"><a href="#">用户名</a></li>
+                        <li ng-click="chooseKey('description','描述')"><a href="#">描述</a></li>
+                    </ul>
+                </div>
+
+                <!-- 操作按钮 -->
+                <div class="clearfix m-t-20 m-b-20">
+                    <a class="btn btn-primary btn-sm m-r-10" ng-click="viewDoc(selectedDocs[0])">打开</a>
+                    <div class="btn-group m-r-10">
+                        <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                            排序 <i class="fa fa-chevron-down m-l-10"></i>
+                        </button>
+                        <ul class="dropdown-menu" id="orderSelect">
+                            <li class="active">
+                                <a href="#" ng-click="setOrder('created_at',$event)">
+                                    <span style="margin-right: 20px">按上传时间</span>
+                                    <span id="orderIcon" class="glyphicon glyphicon-arrow-up"></span>
+                                </a>
+                            </li>
+                            <li><a href="#" ng-click="setOrder('title',$event)">
+                                <span style="margin-right: 20px">按名称</span>
+                            </a></li>
+                            <li><a href="#" ng-click="setOrder('page_count',$event)">
+                                <span style="margin-right: 20px">按页数</span>
+                            </a></li>
+                        </ul>
+                    </div>
+                    <div class="btn-group m-r-10">
+                        <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                            分析 <i class="fa fa-chevron-down m-l-10"></i>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a href="#" data-ng-disabled="true">查看时间线</a></li>
+                            <li><a href="#" data-ng-disabled="true">查看entities</a></li>
+                        </ul>
+                    </div>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                            保存 <i class="fa fa-chevron-down m-l-10"></i>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a href="#" ng-click="downloadFile()">另存为</a></li>
+                        </ul>
+                    </div>
+                    <!--<div class="btn-group  pull-right">
+                        <label class="btn btn-default  active" ng-model="viewType" btn-radio="'list'"><i
+                                class="fa fa-list"></i></label>
+                        <label class="btn btn-default " ng-model="viewType" btn-radio="'view'"><i class="fa fa-th"></i></label>
+                    </div>-->
+                </div>
+
+                <!-- 文档列表 -->
+                <div ng-repeat="doc in documents" style="margin-bottom: 20px">
+                    <div class="col" style="width: 100px"
+                         ng-click="selectDoc(doc)"  ng-dblclick="viewDoc(doc)" >
+                        <a ><img class="docView" ng-class="{'selected':doc.selected}" tooltip="双击打开新页面查看"
+                                 ng-src="{{fileUrl+doc._id+'/thumb_p1.png'}}" width="80">
+                        </a>
+                    </div>
+                    <div class="col">
+                        <h5 ng-click="selectDoc(doc)" style="cursor: pointer" ng-dblclick="viewDoc(doc)">
+                            <span style="font-weight: bold" tooltip="双击打开新页面查看" ng-bind-html="doc.title"></span>
+                        </h5>
+                        <p class="text-muted">
+                            共<a ng-click="switchPages($index,doc._id,doc.page_count)" class=" m-l-5 m-r-5">{{doc.page_count}}</a>页-
+                            上传者：<a class="">{{doc.user_name}}</a>-
+                            上传时间：{{doc.created_at}}
+                        </p>
+                        <p ng-bind-html="doc.description" style="background-color: #f4f4f4; padding: 0 10px"></p>
+                        <div id="docPages-{{doc._id}}" style="display: none" class="clearfix">
+                            <div class="m-t-20">
+                                <a ng-click="hidePages(doc._id)"><i class="fa fa-times-circle" tooltip="取消查看"></i></a>
+                                <span class="m-l-20"><b>共 {{doc.page_count}} 页</b></span>
+                                <span class="m-l-20">
+                                    <a ng-click="viewDoc(doc)">在新标签页中查看所有页面</a>
+                                </span>
+                            </div>
+                            <div class="page" ng-repeat="p in showPages[doc.index]">
+                                <a ng-click="viewDoc(doc,'pdf',p)">
+                                    <img id="{{doc._id}}_{{p}}" ng-src="" width="96">
+                                    <div class="text-center">p.{{$index+1}}</div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="clearfix" ng-if="showKeywords==true">
+                            <div class="m-t-20">
+                                <span class="m-l-20">
+                                    提及<span ng-bind-html="keywords"></span>的{{doc.showPageCount}}个页面</span>
+                                <span class="m-l-20" ng-if="doc.showPageCount!=doc.pages.length">
+                                    <a ng-click="showAllKeywordsPage(doc)">查看全部{{doc.pages.length}}个页面</a>
+                                </span>
+                            </div>
+                            <div class="searchText" ng-repeat="item in doc.pages | limitTo:doc.showPageCount">
+                                <div class="page_icon" ng-click="viewDoc(doc,'text',item.page)">
+                                    <img ng-src="{{fileUrl+doc._id+'/thumb_p'+item.page+'.png'}}" width="40">
+                                    <div class="text-center">p.{{item.page}}</div>
+                                </div>
+                                <div ng-bind-html="item.text" ng-show="showKeywords"></div>
+                                <div class="clear"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div ng-hide="hasDocs">
+                    <div style="color:red;">当前查询条件下没有文档...</div>
+                </div>
+
+                <!-- 翻页 -->
+                <nav>
+                    <ul class="pager">
+                        <li id="prev"><a href="#" ng-click="setPage(-1,$event)">上一页</a></li>
+                        <li id="next"><a href="#" ng-click="setPage(1,$event)">下一页 </a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<style>
+    em{
+        color: red;
+        font-style: normal;
+    }
+
+    .pager li>a, .pager li>span {
+        display: inline-block;
+        padding: 5px 14px;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 15px;
+        color: #337ab7;
+        text-decoration: none;
+    }
+
+</style>

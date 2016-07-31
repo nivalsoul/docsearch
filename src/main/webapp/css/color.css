@@ -1,0 +1,174 @@
+body{
+    background-color: #f8f8f8;
+    font-size: 12px;
+    color:rgba(35, 35, 35, 0.8)
+}
+a {
+    color: #161616;
+}
+a:hover{color:#ffc20a}
+a:focus{color:#ffc20a}
+
+.header a{
+    color: #3E3929;/*头部文字颜色*/
+}
+.breadcrumb  li a{
+    color: #3E3929;/*面包屑文字颜色*/
+    font-size: 14px;
+}
+.skin-gold .nav-wrapper{
+    border-right: none;
+    background: #1d1d1d;/*导航的颜色*/
+}
+#navDiv .nav>li.active>ul>li>a, #navDiv .nav>li ul>li>a,#navDiv .nav>li.active>ul>li.active>a,
+#navDiv .nav>li.active>ul>li>a:hover, #navDiv .nav>li.active>ul>li.active>a:hover{
+    color: #ccc;
+    font-size: 13px;
+    padding: 12px 6px 12px 45px;
+    background-color: #161616;/*二级菜单的背景颜色*/
+}
+.nav-wrapper .logo{
+    /*border-right: 1px solid #1472CA;*//*左上logo底色*/
+    padding-left: 5px;
+    height: 50px;
+    line-height: 50px;
+}
+#navDiv .nav>li.active>a {
+    background-color: #161616;
+     color: #ffc20a;
+}
+#navDiv .nav>li>a:hover,#navDiv .nav>li.active>a:hover{
+    transition: all 0.5s;
+    background-color: #111111;
+    color: #ffc20a;
+}
+#navDiv .nav>li.active>a i,#navDiv .nav>li.active>a:hover i,#navDiv .nav>li>a:hover i,#navDiv .nav>li.active>a:hover i{
+    color: #ffc20a;
+}
+#navDiv .nav>li> a{
+    color:#ccc/*菜单文字的颜色*/
+}
+#navDiv .nav>li.active>ul>li>a{
+
+}
+#navDiv .nav>li.active>ul>li.active>a{
+    color: #ffca1b;/*二级菜单选中的颜色*/
+}
+#navDiv .nav>li.active>ul>li>a:hover,#navDiv .nav>li.active>ul>li.active>a:hover{
+    color: #ffca1b;/*二级菜单选中鼠标hover的颜色*/
+    transition: color 0.1s;
+}
+/*#navDiv .nav>li.active>ul>li.active>a:hover{*/
+    /*color: #2484dd;*/
+/*}*/
+
+.text-danger {
+    color: #c82418;
+}
+.text-black{
+    color: #111;
+}
+.text-warning {
+    color: #FE5A01!important;
+}
+.label-warning{
+    background-color: #FE5A01;
+}
+.label-success {
+    background-color: #30bb74;
+}
+.label-info {
+    background-color: #1777D2;
+}
+.label-danger {
+    background-color: #B71815;
+}
+.label-primary{
+    background-color: #ffc20a;
+}
+.bs-callout {
+    padding: 20px;
+    margin: 20px 0;
+    border: 1px solid #eee;
+    border-left-width: 5px;
+    border-radius: 3px;
+}
+.bs-callout-danger {
+    border-left-color: #ce4844;
+}
+
+.btn-primary {
+    color: #535353;
+    background-color: #ffc20a;
+    border-color: #ffc20a;
+}
+.btn-primary:hover,.btn-primary:focus,.btn-primary:visited,.btn-primary:active,.btn-primary.active {
+    color: #535353!important;
+    background-color: #eab000 !important;
+    border-color: #c90 !important;
+}
+.btn-primary.disabled,.btn-primary[disabled] {
+    background-color: #ffc20a !important;
+    border-color: #ffc20a !important;
+}
+.btn-success {
+    color: #FFF;
+    background-color: #30bb74;
+    border-color: #30bb74;
+}
+.btn-success:focus,.btn-success.focus,.btn-success:hover{color:#FFF;background-color:#2aa365;border-color:#238a56}
+.btn-dark {
+    color: #FFF;
+    background-color: #535353;
+    border-color: #535353;
+}
+.btn-dark:hover {
+    color: #FFF;
+    background-color: #494949;
+    border-color: #444;
+}
+.btn-danger {
+    color: #FFF;
+    background-color: #eb525d;
+    border-color: #eb525d;
+}
+.btn-danger:hover {
+    color: #FFF;
+    background-color: #e9404c;
+    border-color: #e83743;
+}
+.btn-info {
+    color: #FFF;
+    background-color: #49c0e7;
+    border-color: #49c0e7;
+}
+.btn-info:hover {
+    color: #FFF;
+    background-color: #37bae5;
+    border-color: #2eb7e3;
+}
+.pagination>.active>a, .pagination>.active>a:hover, .pagination>.active>a:focus, .pagination>.active>span, .pagination>.active>span:hover, .pagination>.active>span:focus{
+    background-color: #4eb6cf;
+    border-color: #4baec7;
+}
+.b-success {
+    border-color: #17CF4D;
+}
+.skin-gold .badge{
+    background-color:#6ccbea
+}
+.nav-tabs>li>a {
+    margin-right: 2px;
+    line-height: 1.42857;
+    border: 1px solid transparent;
+    border-radius: 2px 2px 0 0;
+}
+.nav-tabs>li.active>a {
+    color: #ffc20a!important;
+}
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
+    color: #535353;
+    background-color: #FFF;
+    border: 1px solid #ededed;
+    border-bottom-color: transparent;
+}

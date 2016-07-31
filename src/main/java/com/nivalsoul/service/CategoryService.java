@@ -10,9 +10,9 @@ import org.springframework.stereotype.Service;
 import com.google.common.base.Strings;
 import com.nivalsoul.dao.CategoryDao;
 import com.nivalsoul.dao.DocumentDao;
-import com.nivalsoul.domain.Category;
-import com.nivalsoul.domain.Document;
-import com.nivalsoul.domain.ResultInfo;
+import com.nivalsoul.model.Category;
+import com.nivalsoul.model.Document;
+import com.nivalsoul.model.ResultInfo;
 
 @Service
 public class CategoryService {

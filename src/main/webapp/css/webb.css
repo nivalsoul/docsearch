@@ -1,0 +1,184 @@
+ #navDiv .nav>li>a{
+    color: #ccc;
+}
+
+
+.bg-primary>.panel-body{
+    padding: 30px;
+    background-color: #f6f8f8;
+}
+
+.nav-wrapper .logo .img{
+    margin-right: 5px;
+    margin-top: 4px;
+    cursor: pointer;
+    margin-left: 10px;
+    transition: background-image 0.1s;
+    background-image: url("/img/chinacloud.png");
+    width: 140px;
+    height: 40px;
+    background-size: cover;
+}
+ .nav-wrapper .logo:hover .img{
+     background-image: url("/img/chinacloud_hover.png");
+     width: 140px;
+     height: 40px;
+     background-size: cover;
+ }
+#navDiv .nav>li>a{
+    padding: 14px 0px 14px 5px;
+}
+#navDiv .nav>li>a>i, #navDiv .nav>li>a>.fa, #navDiv .nav>li>a .glyphicon{
+    margin-right: 10px;
+}
+
+#navDiv .nav>li>a:hover, #navDiv .nav>li>a:focus{
+
+    background-color: #111111;
+    /*color: #fff;*/
+}
+#navDiv .nav>li>a>i, #navDiv .nav>li>a>.fa, #navDiv .nav>li>a .glyphicon{
+    font-size: 12px;
+}
+
+
+.btn{
+    border-radius: 0;
+}
+
+.table{
+    border: 1px solid #eee;
+    background-color: #f9f9f9;
+}
+.table>thead>tr>th{
+    border-bottom: 1px solid #EDEBE7;
+    background-color: #fff;
+}
+
+.label{
+    border-radius: 0;
+}
+
+.table-striped>tbody>tr:nth-of-type(odd){
+    background-color: transparent;
+}
+.table-striped>tbody>tr:nth-of-type(even){
+    background-color: #fff;
+}
+.table-hover>tbody>tr:hover {
+    background-color: #f5f4d5;
+}
+.webb-card{
+    background-color: #fff;
+  float: left;
+    width: 24%;
+    margin-right: 1%;
+    border-right-width:1px;
+    border-right-style:solid;
+    height: 100px;
+}
+.webbs{
+    margin-left: -220px;
+    margin-top: -50px;
+}
+
+ .nav-sub{
+     overflow: auto;
+ }
+ #navDiv{
+     overflow: visible;
+ }
+ #navDiv .nav>li{
+     position: relative;
+ }
+
+ body.webb-nav{
+     padding-left: 60px;
+ }
+ #navDiv .nav{
+     width: auto;
+ }
+
+ .webb-nav #navDiv{
+     width: 60px;
+ }
+
+ .webb-nav .content{
+     margin-left: 60px;
+ }
+ .webb-nav .comm-top-left{
+     padding-left: 75px;
+ }
+ .webb-nav >#navDiv .nav>li>a>i,.webb-nav #navDiv .nav>li>a>.fa, .webb-nav #navDiv .nav>li>a .glyphicon{
+     font-size: 18px;
+ }
+ .webb-nav  .nav-wrapper .logo{
+     overflow: hidden;
+     width: 50px;
+     height: 50px;
+     line-height: 50px;
+ }
+ .webb-nav  .nav-wrapper .logo img{
+     width: 38px;
+     margin-left: 2px;
+     margin-top: 5px;
+ }
+ .nav-wrapper .logo .smallLogo{
+     display: none;
+ }
+ .webb-nav  .nav-wrapper .logo .bigLogo{
+     display: none;
+ }
+ .webb-nav  .nav-wrapper .logo .smallLogo{
+     display: block;
+ }
+ .webb-nav  #navDiv .nav ul {
+     background-color: #31322f;
+     position: absolute;
+     top: 0!important;
+     left: 100%;
+     z-index: 1050;
+     width: 200px;
+     height: 0!important;
+     -webkit-box-shadow: 0 2px 6px rgba(0,0,0,.1);
+     box-shadow: 0 2px 6px rgba(0,0,0,.1);
+ }
+
+ .active .nav-sub,
+ .webb-nav  #navDiv .nav > li:hover ul,
+ .webb-nav #navDiv li:focus .nav-sub,
+ .webb-nav  #navDiv  li:active .nav-sub {
+     height: auto !important;
+     margin-left: 0;
+     overflow: auto;
+     opacity: 1;
+ }
+ .webb-nav  #navDiv .nav  .subNavSpan, .webb-nav  #navDiv .nav .fa-angle-down{
+     display: none;
+ }
+ .webb-nav #navDiv .nav > li >a {
+     position: relative;
+     padding: 0;
+     text-align: center;
+     border: none;
+ }
+
+ .webb-nav #navDiv .nav > li >a i {
+     display: block;
+     float: none!important;
+     width: auto;
+     margin: 0;
+     font-size: 16px;
+     line-height: 50px;
+     border: none!important;
+ }
+ .webb-nav #navDiv .nav ul >li> a,.webb-nav #navDiv .nav>li.active>ul>li>a {
+     position: relative;
+     display: block;
+     padding: 10px 20px;
+     font-weight: 400;
+     text-align: left;
+     text-transform: none;
+     -webkit-transition: background-color .2s ease-in-out 0s;
+     transition: background-color .2s ease-in-out 0s;
+ }

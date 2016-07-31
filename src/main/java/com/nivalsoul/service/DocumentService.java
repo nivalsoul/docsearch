@@ -14,9 +14,9 @@ import org.springframework.web.multipart.MultipartFile;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.nivalsoul.dao.DocumentDao;
-import com.nivalsoul.domain.Document;
-import com.nivalsoul.domain.Page;
-import com.nivalsoul.domain.ResultInfo;
+import com.nivalsoul.model.Document;
+import com.nivalsoul.model.Page;
+import com.nivalsoul.model.ResultInfo;
 
 @Service
 public class DocumentService {

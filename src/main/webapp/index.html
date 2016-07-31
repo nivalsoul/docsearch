@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="css/vendor-3e4b16a7.css">
+<link rel="stylesheet" href="css/app-63b146b0.css">
+<script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="js/angular.min.js"></script>
+<script type="text/javascript" src="js/angular-route.min.js"></script>
+
+<script type="text/javascript">
+    var app = angular.module('myApp', ['ngRoute']);
+    
+    app.config(function ($routeProvider) {
+        $routeProvider.
+        when('/search', {
+            templateUrl: 'search.html',
+            controller: 'searchCtrl'
+        }).
+        when('/home', {
+            templateUrl: 'docManagement.html',
+            controller: 'docManagementCtrl'
+        }).
+        otherwise({
+            redirectTo: '/search'
+        });
+    });
+    
+    function showPage(url,obj){
+    	$("ul.nav li").each(function(){
+    		$(this).removeClass("active");
+    	})
+    	$(obj).parent().addClass("active");
+    }
+</script>
+</head>
+<body ng-app="myApp">
+<div class="container-fluid">
+	<div class="row-fluid">
+		<div class="span12">
+			<ul class="nav nav-tabs">
+				<li class="active">
+					<a href="#/search" onclick="showPage(this)">文档搜索</a>
+				</li>
+				<li>
+					<a href="#/home" onclick="showPage(this)">我的文档</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+<div id="main_content" ng-view>
+ 
+</div>
+<script type="text/javascript" src="js/docCloudCtrl2.js"></script>
+<script type="text/javascript" src="js/docManagement.js"></script>
+<script type="text/javascript" src="js/docCloudService.js"></script>
+<script type="text/javascript">
+	
+</script>
+</body>
+</html>

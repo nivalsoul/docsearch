@@ -1,4 +1,4 @@
-package com.nivalsoul.domain;
+package com.nivalsoul.model;
 
 public class Page {
 

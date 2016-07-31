@@ -30,8 +30,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.nivalsoul.config.FileSaveConfig;
 import com.nivalsoul.dao.DocumentDao;
-import com.nivalsoul.domain.Document;
-import com.nivalsoul.domain.Page;
+import com.nivalsoul.model.Document;
+import com.nivalsoul.model.Page;
 import com.nivalsoul.utils.ImageUtil;
 import com.nivalsoul.utils.MD5;
 

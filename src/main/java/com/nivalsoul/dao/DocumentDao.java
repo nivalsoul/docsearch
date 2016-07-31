@@ -21,9 +21,9 @@ import org.springframework.web.util.HtmlUtils;
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Maps;
 import com.nivalsoul.config.ESConfig;
-import com.nivalsoul.domain.Document;
-import com.nivalsoul.domain.Page;
-import com.nivalsoul.domain.ResultInfo;
+import com.nivalsoul.model.Document;
+import com.nivalsoul.model.Page;
+import com.nivalsoul.model.ResultInfo;
 import com.nivalsoul.utils.ESUtil;
 
 @Component
