@@ -5,7 +5,7 @@ public class Category {
 	private String _id;
 	private String parent_id;
 	private String name;
-	private String tenant_id;
+	private String dept_id;
 	private String user_id;
 	private String type;
 	
@@ -27,11 +27,11 @@ public class Category {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getTenant_id() {
-		return tenant_id;
+	public String getDept_id() {
+		return dept_id;
 	}
-	public void setTenant_id(String tenant_id) {
-		this.tenant_id = tenant_id;
+	public void setDept_id(String dept_id) {
+		this.dept_id = dept_id;
 	}
 	public String getUser_id() {
 		return user_id;

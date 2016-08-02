@@ -9,7 +9,7 @@ curl -XPOST http://172.16.50.81:19200/docdive/category/_mapping -d'
             "store": "false"
         },
         "properties": {
-            "tenant_id": {
+            "dept_id": {
                 "type": "string",
 				"index": "not_analyzed"
             },
@@ -46,7 +46,7 @@ curl -XPOST http://172.16.50.81:19200/docdive/document/_mapping -d'
             "store": "false"
         },
         "properties": {
-		    "tenant_id": {
+		    "dept_id": {
                 "type": "string",
 				"index": "not_analyzed"
             },

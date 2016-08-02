@@ -22,9 +22,9 @@ public class CategoryDao {
 	}
 
 	public int add(Category category) {
-		String sql = "insert into category (_id,parent_id,name,tenant_id,user_id,type)" + " values('"
+		String sql = "insert into category (_id,parent_id,name,dept_id,user_id,type)" + " values('"
 				+ category.get_id() + "', '" + category.getParent_id() + "', '" 
-				+ category.getName() + "', '" + category.getTenant_id() + "', '" 
+				+ category.getName() + "', '" + category.getDept_id() + "', '" 
 				+ category.getUser_id() + "', '" + category.getType() + "')";
 		return ESUtil.exec(sql);
 	}
@@ -53,7 +53,7 @@ public class CategoryDao {
 				category.set_id(id);
 				category.setName(rs.getString("name"));
 				category.setParent_id(rs.getString("parent_id"));
-				category.setTenant_id(rs.getString("tenant_id"));
+				category.setDept_id(rs.getString("dept_id"));
 				category.setType(rs.getString("type"));
 				category.setUser_id(rs.getString("user_id"));
 			}
@@ -84,7 +84,7 @@ public class CategoryDao {
 					category.set_id(rs.getString("_id"));
 					category.setName(rs.getString("name"));
 					category.setParent_id("0");
-					category.setTenant_id(rs.getString("tenant_id"));
+					category.setDept_id(rs.getString("dept_id"));
 					category.setType(rs.getString("type"));
 					category.setUser_id(rs.getString("user_id"));
 					list.add(category);
@@ -118,7 +118,7 @@ public class CategoryDao {
 				category.set_id(rs.getString("_id"));
 				category.setName(rs.getString("name"));
 				category.setParent_id(rs.getString("parent_id"));
-				category.setTenant_id(rs.getString("tenant_id"));
+				category.setDept_id(rs.getString("dept_id"));
 				category.setType(rs.getString("type"));
 				category.setUser_id(rs.getString("user_id"));
 			}

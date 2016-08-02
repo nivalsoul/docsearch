@@ -1,10 +1,14 @@
 package com.nivalsoul;
 
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.context.embedded.FilterRegistrationBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
@@ -40,5 +44,15 @@ public class Application extends SpringBootServletInitializer{
 		logger.info("do init===");
         return new DoInit ();
     } 
+	
+	@Bean
+	public FilterRegistrationBean delegateFilter(ServletContext servletContext)
+			throws ServletException {
+		FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
+		filterRegistrationBean.setFilter(new AuthFilter());
+		filterRegistrationBean.setEnabled(true);
+		filterRegistrationBean.addUrlPatterns("/v1/*");
+		return filterRegistrationBean;
+	}
 
 }

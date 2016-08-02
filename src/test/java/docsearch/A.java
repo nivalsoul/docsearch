@@ -126,8 +126,8 @@ public class A{
 		Document document = new Document();
 		document.set_id(rs.getString("_id"));
 		String tenant_id = rs.getString("tenant_id");
-		document.setTenant_id(tenant_id);
-		document.setTenant_name(rs.getString("tenant_name"));
+		document.setDept_id(tenant_id);
+		document.setDept_name(rs.getString("tenant_name"));
 		document.setCategory_id(rs.getString("category_id"));
 		document.setUser_id(rs.getString("user_id"));
 		document.setUser_name(rs.getString("user_name"));

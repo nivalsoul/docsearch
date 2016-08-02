@@ -49,7 +49,7 @@ public class CategoryService {
 		category.set_id(id);
 		category.setName(name);
 		category.setParent_id("0");
-		category.setTenant_id("");
+		category.setDept_id("");
 		category.setType("用户");
 		category.setUser_id(userId);
 		int count = categoryDao.add(category);

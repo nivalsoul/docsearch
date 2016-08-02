@@ -12,8 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.google.common.base.Strings;
-import com.google.common.collect.Lists;
 import com.nivalsoul.dao.DocumentDao;
+import com.nivalsoul.model.Dept;
 import com.nivalsoul.model.Document;
 import com.nivalsoul.model.Page;
 import com.nivalsoul.model.ResultInfo;
@@ -26,6 +26,9 @@ public class DocumentService {
 	
 	@Autowired
 	private FileService fileService;
+	
+	@Autowired
+	private PermissionService permissionService;
 	
 	public Object getDocument(String userId, String documentId) {
 		Document document = documentDao.getDocumentById(documentId);
@@ -50,7 +53,7 @@ public class DocumentService {
 			Document doc = new Document();
 			doc.set_id(fileInfo.get("document_id"));
 			doc.setCategory_id(fileInfo.get("category_id"));
-			doc.setTenant_id(fileInfo.get("tenant_id"));
+			doc.setDept_id(fileInfo.get("dept_id"));
 			doc.setUser_id(userId);
 			doc.setUser_name(userName);
 			doc.setFile_name(fileInfo.get("title"));
@@ -94,10 +97,10 @@ public class DocumentService {
 	public Object updateDocument(String userId, String documentId, Map<String, String> fileInfo) {
 		ResultInfo info = new ResultInfo();
 		if (Strings.isNullOrEmpty(fileInfo.get("title")) 
-				|| Strings.isNullOrEmpty(fileInfo.get("tenant_id"))
+				|| Strings.isNullOrEmpty(fileInfo.get("dept_id"))
 				|| Strings.isNullOrEmpty(fileInfo.get("category_id"))) {
 			info.setCode(415); // 请求格式不匹配
-			info.setMessage("cannot set the empty value of [title/tenant_id/category_id]");
+			info.setMessage("cannot set the empty value of [title/dept_id/category_id]");
 			return info;
 		}
 		Document document = documentDao.getDocumentById(documentId);
@@ -114,7 +117,7 @@ public class DocumentService {
 		// use insert sql to update es
 		document.setTitle(fileInfo.get("title"));
 		document.setCategory_id(fileInfo.get("category_id"));
-		document.setTenant_id(fileInfo.get("tenant_id"));
+		document.setDept_id(fileInfo.get("dept_id"));
 		document.setDescription(fileInfo.get("description"));
 		String dt = DateTime.now().toString("yyyy-MM-dd HH:mm:ss");
 		document.setUpdated_at(dt);
@@ -192,23 +195,27 @@ public class DocumentService {
 	 * @return
 	 */
 	public Object stats(String userId) {
-		Map<String, String> tenantNames = new HashMap<String, String>();
-		String condition = getTenantInfoByUserId(userId, tenantNames);
+		Map<String, String> deptNames = new HashMap<String, String>();
+		String condition = getDeptInfoByUserId(userId, deptNames);
 		if(condition == null){
 			ResultInfo info = new ResultInfo();
 			info.setCode(403);
-			info.setMessage("stats error: you do not belong to any tenant");
+			info.setMessage("stats error: you do not belong to any dept");
 			return info;
 		}
 		
-		return documentDao.stats(condition, tenantNames);
+		return documentDao.stats(condition, deptNames);
 	}
 
-	private String getTenantInfoByUserId(String userId, Map<String, String> tenantNames) {
-		List<String> tenants = Lists.newArrayList();
+	private String getDeptInfoByUserId(String userId, Map<String, String> deptNames) {
+		List<Dept> depts = permissionService.geDeptsByUserId(userId);
+		if (depts.size() == 0) {
+			return null;
+		}
 		String condition = "('";
-		for (String tenant : tenants) {
-			condition += tenant + "','";
+		for (Dept dept : depts) {
+			condition += dept.getDeptid() + "','";
+			deptNames.put(dept.getDeptid().toString(), dept.getDeptname());
 		}
 		condition = condition.substring(0, condition.length() - 2);
 		condition += ")";
@@ -217,12 +224,12 @@ public class DocumentService {
 	
 	public Object search(String userId, String query, int page_num, int page_size, String order) {
 		//权限判断
-		Map<String, String> tenantNames = new HashMap<String, String>();
-		String tenantCnd = getTenantInfoByUserId(userId, tenantNames);
-		if(tenantCnd == null){
+		Map<String, String> deptNames = new HashMap<String, String>();
+		String deptCnd = getDeptInfoByUserId(userId, deptNames);
+		if(deptCnd == null){
 			ResultInfo info = new ResultInfo();
 			info.setCode(403);
-			info.setMessage("search error: you do not belong to any tenant");
+			info.setMessage("search error: you do not belong to any dept");
 			return info;
 		}
 		//参数处理

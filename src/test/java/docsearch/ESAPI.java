@@ -79,7 +79,7 @@ public class ESAPI {
 		Document doc = new Document();
 		doc.set_id("020b25fb-1a42-4c2b-83b7-26c34aa63b5c");
 		doc.setCategory_id("fbc12eb5-11da-43e1-bd6d-395f7a5b56c4");
-		doc.setTenant_id("4906d847-83b6-468f-b8bd-f91969985542");
+		doc.setDept_id("4906d847-83b6-468f-b8bd-f91969985542");
 		doc.setUser_id("4191994b-66b4-4c28-8b0a-39f215a735b8");
 		doc.setUser_name("xuwenlong@chinacloud.com.cn");
 		doc.setTitle("简桢散文集");

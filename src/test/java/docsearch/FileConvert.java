@@ -53,12 +53,12 @@ public class FileConvert {
 
 	public static void main(String[] args) throws IOException {
 		//convert();
-		/*String inputFile="E:/test/韦雨晴的简历2.docx";
-		String outputFile="E:/test/韦雨晴的简历000.pdf";
-		convert(inputFile, outputFile);*/
+		String inputFile="G:/工作相关资料/交接文档.doc";
+		String outputFile="G:/工作相关资料/交接文档.pdf";
+		convert(inputFile, outputFile);
 		//convertAll("E:/test");
 		//System.out.println(new File("c:/abc/test.txt").getName().endsWith(".txt"));
-		toUTF8(new File("E:\\文学艺术\\new.html"));
+		//toUTF8(new File("E:\\文学艺术\\new.html"));
 	}
 	
 	public static void toUTF8(File input) {

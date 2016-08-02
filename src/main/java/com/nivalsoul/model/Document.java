@@ -4,8 +4,8 @@ import java.util.List;
 
 public class Document {
 	private String _id;
-	private String tenant_id;
-	private String tenant_name;
+	private String dept_id;
+	private String dept_name;
 	private String category_id;
 	private String user_id;
 	private String user_name;
@@ -26,17 +26,17 @@ public class Document {
 	public void set_id(String _id) {
 		this._id = _id;
 	}
-	public String getTenant_id() {
-		return tenant_id;
+	public String getDept_id() {
+		return dept_id;
 	}
-	public void setTenant_id(String tenant_id) {
-		this.tenant_id = tenant_id;
+	public void setDept_id(String dept_id) {
+		this.dept_id = dept_id;
 	}
-	public String getTenant_name() {
-		return tenant_name;
+	public String getDept_name() {
+		return dept_name;
 	}
-	public void setTenant_name(String tenant_name) {
-		this.tenant_name = tenant_name;
+	public void setDept_name(String dept_name) {
+		this.dept_name = dept_name;
 	}
 	public String getCategory_id() {
 		return category_id;

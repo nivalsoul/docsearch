@@ -33,9 +33,9 @@ public class DocumentDao {
 	private ESConfig esConfig;
 
 	public int add(Document doc) {
-		String sql = "insert into document (_id,tenant_id,category_id,user_id,user_name"
+		String sql = "insert into document (_id,dept_id,category_id,user_id,user_name"
 			+ ",updated_at,created_at,title,description,format,page_count,file_hash,file_name,status)" 
-			+ " values('" + doc.get_id() + "','" + doc.getTenant_id() + "','" 
+			+ " values('" + doc.get_id() + "','" + doc.getDept_id() + "','" 
 			+ doc.getCategory_id() + "','" + doc.getUser_id() + "','" + doc.getUser_name() + "','" 
 			+ doc.getUpdated_at() + "','" + doc.getCreated_at() + "','" + doc.getTitle() + "','" 
 			+ doc.getDescription() + "','" + doc.getFormat() + "'," + doc.getPage_count() + ",'" 
@@ -48,7 +48,7 @@ public class DocumentDao {
 		/*//由于sql4es目前无法实现内前对象的添加，故采用es的api来实现
 		String jsonStr = Json.toJson(doc);//由于fastjson转成字符串时_id没有了下划线，故使用nutz的库来转换
 		Map data = Json.fromJsonAsMap(Object.class, jsonStr);
-		data.remove("tenant_name");
+		data.remove("dept_name");
 		String[] ip_port = esConfig.getUrl().split("//")[1].split("/")[0].split(":");
 		int count = new ESUtil(esConfig.getClusterName(), ip_port[0], Integer.parseInt(ip_port[1]))
 		    .singleRequest("docdive", "document", data);*/
@@ -116,12 +116,12 @@ public class DocumentDao {
 					//页面内容转为List对象
 					List<Page> pageList = getPages(document.get_id(), null);
 					document.setPages(pageList);
-					if(!tenats.containsKey(document.getTenant_id())){
-						String tenant_name = "";
-						document.setTenant_name(tenant_name);
-						tenats.put(document.getTenant_id(), tenant_name);
+					if(!tenats.containsKey(document.getDept_id())){
+						String dept_name = "";
+						document.setDept_name(dept_name);
+						tenats.put(document.getDept_id(), dept_name);
 					}else{
-						document.setTenant_name(tenats.get(document.getTenant_id()));
+						document.setDept_name(tenats.get(document.getDept_id()));
 					}
 					list.add(document);
 				}
@@ -162,8 +162,8 @@ public class DocumentDao {
 				//页面内容转为List对象
 				List<Page> pageList = getPages(document.get_id(), null);
 				document.setPages(pageList);
-				String tenant_name = "";
-				document.setTenant_name(tenant_name);
+				String dept_name = "";
+				document.setDept_name(dept_name);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -180,8 +180,8 @@ public class DocumentDao {
 	private Document fillData(ResultSet rs) throws SQLException {
 		Document document = new Document();
 		document.set_id(rs.getString("_id"));
-		String tenant_id = rs.getString("tenant_id");
-		document.setTenant_id(tenant_id);
+		String dept_id = rs.getString("dept_id");
+		document.setDept_id(dept_id);
 		document.setCategory_id(rs.getString("category_id"));
 		document.setUser_id(rs.getString("user_id"));
 		document.setUser_name(rs.getString("user_name"));
@@ -251,24 +251,24 @@ public class DocumentDao {
 	/**
 	 * 文档数按部门（租户）统计
 	 * @param condition
-	 * @param tenantNames
+	 * @param deptNames
 	 * @return
 	 */
-	public Object stats(String condition, Map<String, String> tenantNames) {
+	public Object stats(String condition, Map<String, String> deptNames) {
 		Connection con = Dao.getConnection();
 		Map<String, Object> result = Maps.newHashMap();
 		List<Map<String,Object>> list = new ArrayList<Map<String,Object>>();
 		try {
-			String sql = "select tenant_id,count(*) as document_count from document "
-				+ "where status='success' and tenant_id in "+ condition +" group by tenant_id";
+			String sql = "select dept_id,count(*) as document_count from document "
+				+ "where status='success' and dept_id in "+ condition +" group by dept_id";
 			Statement st = con.createStatement();
 			ResultSet rs = st.executeQuery(sql);
 			if (rs != null) {
 				while(rs.next()){
 					Map<String,Object> map = new HashMap<String,Object>();
-					map.put("tenant_id", rs.getString("tenant_id"));
+					map.put("dept_id", rs.getString("dept_id"));
 					map.put("document_count", (int)rs.getDouble("document_count"));
-					map.put("tenant_name", tenantNames.get(rs.getString("tenant_id")));
+					map.put("dept_name", deptNames.get(rs.getString("dept_id")));
 					list.add(map);
 				}
 			}
@@ -282,13 +282,13 @@ public class DocumentDao {
 				result.put("message", "server error");
 			}else{
 				//没有文档时，返回0
-				Iterator<Entry<String, String>> it = tenantNames.entrySet().iterator();
+				Iterator<Entry<String, String>> it = deptNames.entrySet().iterator();
 				while(it.hasNext()){
 					Entry<String, String> entry = it.next();
 					Map<String,Object> map = new HashMap<String,Object>();
-					map.put("tenant_id", entry.getKey());
+					map.put("dept_id", entry.getKey());
 					map.put("document_count", 0);
-					map.put("tenant_name", entry.getValue());
+					map.put("dept_name", entry.getValue());
 					list.add(map);
 				}
 				result.put("code", 200);
@@ -330,7 +330,7 @@ public class DocumentDao {
 					+ "' order by " + order.replaceAll("title", "title.raw") + " limit " + limitNum;
 			Statement st = con.createStatement();
 			ResultSet rs = st.executeQuery(sql);
-			Map<String, String> tenats = new HashMap<String, String>();
+			Map<String, String> depts = new HashMap<String, String>();
 			//分页处理的临时方案
 			int n = (page_num - 1)*page_size;
 			int i = 1;
@@ -355,12 +355,12 @@ public class DocumentDao {
 						document.setDescription(doc.getDescription());
 						document.setUser_name(doc.getUser_name());
 					}
-					if(!tenats.containsKey(document.getTenant_id())){
-						String tenant_name = "";
-						document.setTenant_name(tenant_name);
-						tenats.put(document.getTenant_id(), tenant_name);
+					if(!depts.containsKey(document.getDept_id())){
+						String dept_name = "";
+						document.setDept_name(dept_name);
+						depts.put(document.getDept_id(), dept_name);
 					}else{
-						document.setTenant_name(tenats.get(document.getTenant_id()));
+						document.setDept_name(depts.get(document.getDept_id()));
 					}
 					if(pageCnd != null && i <= n){//对于满足全文检索条件的记录，跳过前面的(page_num-1)*page_size条记录
 						i++;

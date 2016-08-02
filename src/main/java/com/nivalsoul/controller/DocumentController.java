@@ -44,8 +44,7 @@ public class DocumentController {
 	@ResponseBody
 	public Object uploadFile(HttpServletRequest request,
 			@RequestParam(value ="file") MultipartFile[] files){
-		String userId = (String) request
-				.getAttribute("userId");
+		String userId = (String) request.getAttribute("userId");
 		return documentService.uploadFile(userId, files);
 	}
 	
@@ -53,8 +52,7 @@ public class DocumentController {
 	@ResponseBody
 	public Object deleteFile(HttpServletRequest request,
 			@PathVariable("id") String documentId){
-		String userId = (String) request
-				.getAttribute("userId");
+		String userId = (String) request.getAttribute("userId");
 		return documentService.deleteFile(userId, documentId);
 	}
 	
@@ -80,10 +78,8 @@ public class DocumentController {
     @ResponseBody
     public Object addDocuments(HttpServletRequest request,
     		@RequestBody List<Map<String, String>> files){
-		String userId = (String) request
-				.getAttribute("userId");
-		String userName = (String) request
-				.getAttribute("userName");
+		String userId = (String) request.getAttribute("userId");
+		String userName = (String) request.getAttribute("userName");
         return documentService.addDocuments(userId, userName, files);
     }
 	
@@ -97,8 +93,7 @@ public class DocumentController {
     @ResponseBody
     public Object getDocument(HttpServletRequest request,
     		@PathVariable("id") String documentId){
-		String userId = (String) request
-				.getAttribute("userId");
+		String userId = (String) request.getAttribute("userId");
         return documentService.getDocument(userId, documentId);
     }
 	
@@ -115,8 +110,7 @@ public class DocumentController {
     public Object updateDocument(HttpServletRequest request,
     		@PathVariable("id") String documentId,
     		@RequestBody Map<String, String> fileInfo){
-		String userId = (String) request
-				.getAttribute("userId");
+		String userId = (String) request.getAttribute("userId");
         return documentService.updateDocument(userId, documentId, fileInfo);
     }
 	
@@ -130,8 +124,7 @@ public class DocumentController {
     @ResponseBody
     public Object deleteDocument(HttpServletRequest request,
     		@PathVariable("id") String documentId){
-		String userId = (String) request
-				.getAttribute("userId");
+		String userId = (String) request.getAttribute("userId");
         return documentService.deleteDocument(userId, documentId);
     }
 	
@@ -143,8 +136,7 @@ public class DocumentController {
 	@RequestMapping(value ="/documents/stats", method = RequestMethod.GET)
     @ResponseBody
     public Object stats(HttpServletRequest request){
-		String userId = (String) request
-				.getAttribute("userId");
+		String userId = (String) request.getAttribute("userId");
         return documentService.stats(userId);
     }
 	
@@ -165,8 +157,7 @@ public class DocumentController {
     		@RequestParam(value ="page_size", defaultValue="10") int page_size, 
     		@RequestParam(value ="order", defaultValue="title") String order){
 		
-		String userId = (String) request
-				.getAttribute("userId");
+		String userId = (String) request.getAttribute("userId");
         return documentService.search(userId, query,page_num,page_size,order);
     }
 	
@@ -181,8 +172,7 @@ public class DocumentController {
     public void getDocumentFile(HttpServletRequest request, HttpServletResponse response,
     		@PathVariable("id") String documentId, @PathVariable("filename") String filename,
     		@RequestParam(value="isdownload", defaultValue="no") String isdownload){
-		String userId = (String) request
-				.getAttribute("userId");
+		String userId = (String) request.getAttribute("userId");
         try {  
         	response.setDateHeader("Expires", System.currentTimeMillis()+3600000);
         	response.addHeader("Cache-Control", "max-age=3600");
