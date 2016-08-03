@@ -10,7 +10,7 @@
                     <a class="list-group-item  hover-anchor b-a"  ng-class="{'selected':dept.selected}" ng-repeat="dept in depts"
                        ng-click="searchByTenant(dept)">
                         <span class="font-14 text-black  m-l-xs text-ellipsis"
-                              style="width: 180px;display: inline-block;" tooltip="{{dept.tenant_name}}">{{dept.tenant_name}}</span>
+                              style="width: 180px;display: inline-block;" tooltip="{{dept.dept_name}}">{{dept.dept_name}}</span>
                         <div class="text-muted">{{dept.document_count}}个文档</div>
                     </a>
                 </div>

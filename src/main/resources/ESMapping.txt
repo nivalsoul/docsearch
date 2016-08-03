@@ -1,5 +1,6 @@
-#category
-curl -XPOST http://172.16.50.81:19200/docsearch/category/_mapping -d'
+{
+"url": "http://192.168.2.108:9200/docsearch",
+"types":[
 {
     "category": {
         "_all": {
@@ -31,12 +32,8 @@ curl -XPOST http://172.16.50.81:19200/docsearch/category/_mapping -d'
             }
         }
     }
-}'
+},
 
-============================================================
-
-#document
-curl -XPOST http://172.16.50.81:19200/docsearch/document/_mapping -d'
 {
     "document": {
         "_all": {
@@ -112,11 +109,8 @@ curl -XPOST http://172.16.50.81:19200/docsearch/document/_mapping -d'
             }
         }
     }
-}'
+},
 
-
-#pages
-curl -XPOST http://172.16.50.81:19200/docsearch/pages/_mapping -d'
 {
 	"pages": {
 		"_all": {
@@ -144,5 +138,7 @@ curl -XPOST http://172.16.50.81:19200/docsearch/pages/_mapping -d'
 			}
 		}
 	}
-}'
+}
+]
+}
 

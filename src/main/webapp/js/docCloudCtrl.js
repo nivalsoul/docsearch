@@ -33,16 +33,16 @@ app.controller('searchCtrl',
             $scope.stats();
 
             //点击部门后查询列表
-            $scope.searchByTenant=function(tenant){
+            $scope.searchByTenant=function(dept){
                 angular.forEach($scope.depts,function(item){
-                  if (tenant.tenant_id == item.tenant_id) {
+                  if (dept.dept_id == item.dept_id) {
                       item.selected=true;
                   }else{
                       item.selected=false;
                   }
 
                 });
-                $scope.selectedDept = tenant;
+                $scope.selectedDept = dept;
                 $scope.pageNum=1;
                 var cnd = $scope.getQueryCnd();
                 $scope.search(cnd);
@@ -129,7 +129,7 @@ app.controller('searchCtrl',
                 var all="";
                 var cnd="";
                 if($scope.selectedDept){
-                    cnd += "tenant_id:"+$scope.selectedDept.tenant_id+"@";
+                    cnd += "tenant_id:"+$scope.selectedDept.dept_id+"@";
                 }
                 angular.forEach($scope.inputTagArr,function(item,index){
                     if(item.value!=""){

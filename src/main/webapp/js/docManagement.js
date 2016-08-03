@@ -154,6 +154,7 @@ app.controller('docManagementCtrl',
                 }
                 $uibModal.open({
                     templateUrl: 'newDoc.html',
+                    windowTemplateUrl: "newDoc.html",
                     size:'lg',
                     scope: $scope,
                     keyboard:false,
