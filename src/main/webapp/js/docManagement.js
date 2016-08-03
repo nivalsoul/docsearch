@@ -1,6 +1,6 @@
 'use strict';
 app.controller('docManagementCtrl', 
-        function($scope,$http,$modal,$window,docCloudService) {
+        function($scope,$http,$window,$uibModal,docCloudService) {
             var token="";
             $scope.folders=[];
             $scope.loadDoc=function(id){
@@ -37,7 +37,9 @@ app.controller('docManagementCtrl',
                     .success(function(resp){
                         if(resp.code == 200){
                             $scope.folders=resp.folders;
-                            $scope.selectFolder($scope.folders[0]);
+                            if($scope.folders.length>0){
+                            	$scope.selectFolder($scope.folders[0]);
+                            }
                         }else{
                             alert("获取文件夹失败"+resp.message)
                         }
@@ -150,8 +152,8 @@ app.controller('docManagementCtrl',
                     alert("请先创建文件夹再上传文件！");
                     return;
                 }
-                $modal.open({
-                    templateUrl: 'tpl/docCloud/newDoc.html',
+                $uibModal.open({
+                    templateUrl: 'newDoc.html',
                     size:'lg',
                     scope: $scope,
                     keyboard:false,
@@ -167,8 +169,8 @@ app.controller('docManagementCtrl',
 
             //编辑文档
             $scope.editDoc = function(doc){
-                $modal.open({
-                    templateUrl: 'tpl/docCloud/editDoc.html',
+            	$uibModal.open({
+                    templateUrl: 'editDoc.html',
                     size:'md',
                     keyboard:false,
                     backdrop:'static',
@@ -209,8 +211,8 @@ app.controller('docManagementCtrl',
             };
         })
     .controller('newDocCtrl',
-        function($scope,$modalInstance) {
-            var token=keycloak.token;
+        function($scope,$uibModalInstance,folder_id,docCloudService,FileUploader) {
+            var token="";
             $scope.fileArr=[];
             $scope.loadTenants=function(){
                 docCloudService.loadTenants(token)
@@ -289,7 +291,7 @@ app.controller('docManagementCtrl',
                         console.log(resp);
                         if(resp.code == 200){
                             alert("保存成功");
-                            $modalInstance.close();
+                            $uibModalInstance.close();
                             //上传后刷新列表
                             $scope.loadDoc(folder_id);
                         }else{
@@ -383,12 +385,12 @@ app.controller('docManagementCtrl',
                 console.info('onCompleteAll');
             };
             $scope.cancel = function () {
-                $modalInstance.close();
+                $uibModalInstance.close();
             };
         })
     .controller('editDocCtrl',
-        function ($scope, $modalInstance) {
-            var token = keycloak.token;
+        function ($scope, $uibModalInstance, document, docCloudService) {
+            var token = "";
             $scope.file = {};
             $scope.file._id = document._id;
             $scope.file.tenant_id = document.tenant_id;
@@ -435,7 +437,7 @@ app.controller('docManagementCtrl',
                         console.log(resp);
                         if (resp.code == 200) {
                             alert("保存成功");
-                            $modalInstance.close();
+                            $uibModalInstance.close();
                             //上传后刷新列表
                             $scope.selectFolder($scope.folder);
                         } else {
@@ -449,6 +451,6 @@ app.controller('docManagementCtrl',
             };
             
             $scope.cancel = function () {
-                $modalInstance.close();
+            	$uibModalInstance.close();
             }
         });

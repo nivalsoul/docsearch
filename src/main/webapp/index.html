@@ -8,9 +8,12 @@
 <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
 <script type="text/javascript" src="js/angular.min.js"></script>
 <script type="text/javascript" src="js/angular-route.min.js"></script>
+<script type="text/javascript" src="js/ui-bootstrap-tpls.js"></script>
+<script type="text/javascript" src="js/ui-bootstrap.js"></script>
+<script type="text/javascript" src="js/angular-file-upload.min.js"></script>
 
 <script type="text/javascript">
-    var app = angular.module('myApp', ['ngRoute']);
+    var app = angular.module('myApp', ['ngRoute','ui.bootstrap','angularFileUpload']);
     
     app.config(function ($routeProvider) {
         $routeProvider.
@@ -23,7 +26,7 @@
             controller: 'docManagementCtrl'
         }).
         otherwise({
-            redirectTo: '/search'
+            redirectTo: '/home'
         });
     });
     
@@ -53,7 +56,7 @@
 <div id="main_content" ng-view>
  
 </div>
-<script type="text/javascript" src="js/docCloudCtrl2.js"></script>
+<script type="text/javascript" src="js/docCloudCtrl.js"></script>
 <script type="text/javascript" src="js/docManagement.js"></script>
 <script type="text/javascript" src="js/docCloudService.js"></script>
 <script type="text/javascript">

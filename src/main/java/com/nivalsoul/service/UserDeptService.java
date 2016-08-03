@@ -26,8 +26,8 @@ public class UserDeptService {
 		return userDeptDao.findByUserid(userid);
 	}
 	
-	public List<UserDept> findByDeptid(int tenantid) {
-		return userDeptDao.findByDeptid(tenantid);
+	public List<UserDept> findByDeptid(int deptid) {
+		return userDeptDao.findByDeptid(deptid);
 	}
 	
 	public Object add(UserDept data){

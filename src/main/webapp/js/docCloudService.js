@@ -1,6 +1,6 @@
 //angular.module('docSearchApp2', [])
 app.factory('docCloudService',
-    function($http, $q) {
+    function($http) {
 
     return {
         saveDoc : function(token,data){
@@ -69,7 +69,7 @@ app.factory('docCloudService',
         loadTenants : function(token){
             return $http({
                 method:'GET',
-                url:"/v1/docdive/tenants",
+                url:"/v1/userDepts/depts",
                 headers: {
                     'Content-Type': 'application/json',
                     'X-Auth-Token':token

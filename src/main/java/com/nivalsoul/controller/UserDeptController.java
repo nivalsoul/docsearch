@@ -1,5 +1,9 @@
 package com.nivalsoul.controller;
 
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,20 +13,28 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.nivalsoul.model.Role;
+import com.google.common.collect.Lists;
+import com.nivalsoul.model.Dept;
+import com.nivalsoul.model.User;
 import com.nivalsoul.model.UserDept;
-import com.nivalsoul.model.UserRole;
-import com.nivalsoul.service.RoleService;
+import com.nivalsoul.service.DeptService;
+import com.nivalsoul.service.PermissionService;
 import com.nivalsoul.service.UserDeptService;
-import com.nivalsoul.service.UserRoleService;
+import com.nivalsoul.service.UserService;
 
 @Controller
-@RequestMapping("/userDepts")
+@RequestMapping("/v1/userDepts")
 public class UserDeptController {
 	private static final Logger log = Logger.getLogger(UserDeptController.class);
 	
 	@Autowired
 	private UserDeptService userDeptService;
+	
+	@Autowired
+	private UserService userService;
+	
+	@Autowired
+	private PermissionService permissionService;
 	
 	@RequestMapping(value="/", method = RequestMethod.GET)  
     @ResponseBody
@@ -34,6 +46,29 @@ public class UserDeptController {
 			return userDeptService.findByDeptid(deptid);
         return userDeptService.list();  
     }  
+	
+	/**
+	 * 获取当前用户所属的部门列表,如果是管理员则获取所有部门列表
+	 * @param userid
+	 * @return
+	 */
+	@RequestMapping(value="/depts", method = RequestMethod.GET)  
+	@ResponseBody
+	public Object getDeptsByUserid(HttpServletRequest request){
+		String userId = (String) request.getAttribute("userId");
+		return permissionService.geDeptsByUserId(userId);  
+	}  
+	
+	@RequestMapping(value="/users", method = RequestMethod.GET)  
+	@ResponseBody
+	public Object getUsersByDeptid(@RequestParam(value="deptid") Integer deptid){
+		List<User> users = Lists.newArrayList();
+		List<UserDept> list = userDeptService.findByDeptid(deptid);
+		for (UserDept userDept : list) {
+			users.add(userService.findById(userDept.getUserid()));
+		}  
+		return users;
+	}  
 	
 	@RequestMapping(value="/{id}", method = RequestMethod.GET)  
     @ResponseBody

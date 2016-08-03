@@ -1,5 +1,5 @@
 #category
-curl -XPOST http://172.16.50.81:19200/docdive/category/_mapping -d'
+curl -XPOST http://172.16.50.81:19200/docsearch/category/_mapping -d'
 {
     "category": {
         "_all": {
@@ -36,7 +36,7 @@ curl -XPOST http://172.16.50.81:19200/docdive/category/_mapping -d'
 ============================================================
 
 #document
-curl -XPOST http://172.16.50.81:19200/docdive/document/_mapping -d'
+curl -XPOST http://172.16.50.81:19200/docsearch/document/_mapping -d'
 {
     "document": {
         "_all": {
@@ -116,7 +116,7 @@ curl -XPOST http://172.16.50.81:19200/docdive/document/_mapping -d'
 
 
 #pages
-curl -XPOST http://172.16.50.81:19200/docdive/pages/_mapping -d'
+curl -XPOST http://172.16.50.81:19200/docsearch/pages/_mapping -d'
 {
 	"pages": {
 		"_all": {
