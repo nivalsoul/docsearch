@@ -1,6 +1,8 @@
 package com.nivalsoul.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -56,7 +58,11 @@ public class UserDeptController {
 	@ResponseBody
 	public Object getDeptsByUserid(HttpServletRequest request){
 		String userId = (String) request.getAttribute("userId");
-		return permissionService.geDeptsByUserId(userId);  
+		List<Dept> depts = permissionService.geDeptsByUserId(userId);
+		Map<String, Object> info = new HashMap<String, Object>();
+    	info.put("code", 200);
+		info.put("data", depts);
+		return info;  
 	}  
 	
 	@RequestMapping(value="/users", method = RequestMethod.GET)  
@@ -67,7 +73,10 @@ public class UserDeptController {
 		for (UserDept userDept : list) {
 			users.add(userService.findById(userDept.getUserid()));
 		}  
-		return users;
+		Map<String, Object> info = new HashMap<String, Object>();
+    	info.put("code", 200);
+		info.put("data", list);
+		return info;  
 	}  
 	
 	@RequestMapping(value="/{id}", method = RequestMethod.GET)  

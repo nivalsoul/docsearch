@@ -21,9 +21,11 @@ import org.springframework.web.util.HtmlUtils;
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Maps;
 import com.nivalsoul.config.ESConfig;
+import com.nivalsoul.model.Dept;
 import com.nivalsoul.model.Document;
 import com.nivalsoul.model.Page;
 import com.nivalsoul.model.ResultInfo;
+import com.nivalsoul.service.DeptService;
 import com.nivalsoul.utils.ESUtil;
 
 @Component
@@ -31,6 +33,9 @@ public class DocumentDao {
 	
 	@Autowired
 	private ESConfig esConfig;
+	
+	@Autowired
+	private DeptService deptService;
 
 	public int add(Document doc) {
 		String sql = "insert into document (_id,dept_id,category_id,user_id,user_name"
@@ -71,9 +76,11 @@ public class DocumentDao {
 		for (Map<String, Object> map : JSON.parseArray(jsonStr, Map.class)) {
 			rows.add(map);
 		}
-		String[] ip_port = esConfig.getUrl().split("//")[1].split("/")[0].split(":");
+		String[] info = esConfig.getUrl().split("//")[1].split("/");
+		String[] ip_port = info[0].split(":");
+		String db = info[1];
 		int count = new ESUtil(esConfig.getClusterName(), ip_port[0], Integer.parseInt(ip_port[1]))
-		    .bulkRequest("docdive", "pages", rows);
+		    .bulkRequest(db, "pages", rows);
 		
 		return count;
 	}
@@ -108,7 +115,7 @@ public class DocumentDao {
 				+ "where category_id='"+categoryId+"' and user_id='" + userId + "'";
 			Statement st = con.createStatement();
 			ResultSet rs = st.executeQuery(sql);
-			Map<String, String> tenats = new HashMap<String, String>();
+			Map<String, String> depts = new HashMap<String, String>();
 			if (rs != null) {
 				while(rs.next()){
 					//填充数据
@@ -116,12 +123,12 @@ public class DocumentDao {
 					//页面内容转为List对象
 					List<Page> pageList = getPages(document.get_id(), null);
 					document.setPages(pageList);
-					if(!tenats.containsKey(document.getDept_id())){
-						String dept_name = "";
-						document.setDept_name(dept_name);
-						tenats.put(document.getDept_id(), dept_name);
+					if(!depts.containsKey(document.getDept_id())){
+						Dept dept = deptService.findById(Integer.parseInt(document.getDept_id()));
+						document.setDept_name(dept.getDeptname());
+						depts.put(document.getDept_id(), dept.getDeptname());
 					}else{
-						document.setDept_name(tenats.get(document.getDept_id()));
+						document.setDept_name(depts.get(document.getDept_id()));
 					}
 					list.add(document);
 				}

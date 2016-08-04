@@ -24,9 +24,9 @@
     <div class="form-group clearfix">
         <label class="pull-left text-right" style="width: 80px">部门：<span class="text-danger">*</span></label>
         <div class="pull-left" style="width: 440px">
-            <select class="form-control" ng-model="file.dept_id"
-                    ng-options="dept.deptid as dept.deptname for dept in deptArr">
-            </select>
+            <select class="form-control" ng-model="file.dept_id" >
+                    <option ng-repeat="dept in depts" value={{dept.deptid}}>{{dept.deptname}}</option>
+            </select><!--  ng-options="dept.deptid as dept.deptname for dept in depts" -->
         </div>
     </div>
     <div class="form-group clearfix">

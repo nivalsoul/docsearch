@@ -217,12 +217,17 @@ app.controller('docManagementCtrl',
             $scope.loadTenants=function(){
                 docCloudService.loadTenants(token)
                     .success(function(resp){
-                        $scope.deptArr=resp;
+                    	if(resp.code==200){
+                    		$scope.deptArr=resp.data;
+                    		$scope.file.dept_id=$scope.deptArr[0].deptid;
+                    	}else{
+                    		alert("获取部门列表失败"+resp.message);
+                    	}
                         console.log($scope.deptArr);
-                        $scope.file.dept_id=$scope.deptArr[0].deptid;
+                        
                     })
                     .error(function(){
-                        alert("获取租户列表失败")
+                        alert("获取部门列表失败")
                     })
             };
             $scope.loadFolder=function(){
@@ -402,10 +407,15 @@ app.controller('docManagementCtrl',
             $scope.loadTenants = function () {
                 docCloudService.loadTenants(token)
                     .success(function (resp) {
-                        $scope.deptArr = resp;
+                    	if (resp.code == 200) {
+                    		$scope.depts = resp.data;
+                        } else {
+                            alert("获取部门列表失败" + resp.message)
+                        }
+                        console.log($scope.depts);
                     })
                     .error(function () {
-                        alert("获取租户列表失败")
+                        alert("获取部门列表失败")
                     })
             };
             $scope.loadFolder = function () {

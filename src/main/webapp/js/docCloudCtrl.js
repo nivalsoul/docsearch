@@ -1,7 +1,6 @@
 'use strict';
 app.controller('searchCtrl', 
     function($scope,$window,docCloudService) {
-	    $scope.name = "abcc";
         var token="keycloak.token";
         $(window).on('resize',window_resize);
         function window_resize(){
@@ -251,7 +250,7 @@ app.controller('searchCtrl',
             if(!doc){
                 return;
             }
-            var url = 'webbs/docView?docId='+doc._id;
+            var url = '#/docView?docId='+doc._id;
             if(viewType){
                 url += '&viewType='+viewType;
             }

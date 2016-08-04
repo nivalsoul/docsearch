@@ -34,13 +34,13 @@ public class A{
 		//info.setProperty("fetch.size", "10");
 		info.setProperty("scroll.timeout.sec", "100");
 		info.setProperty("result.nested.lateral", "false");
-		String url = "jdbc:sql4es://192.168.2.108:9300/test";
+		String url = "jdbc:sql4es://192.168.2.108:9300/docsearch";
 		//url = "jdbc:sql4es://10.111.131.22:9300/docdive";
 		Connection con = DriverManager.getConnection(url,info);
 		Statement st = con.createStatement();
 		
 		
-		//int k = st.executeUpdate("insert into docdive.document2 select * from document");
+		//int k = st.executeUpdate("insert into docsearch.pages select * from pages");
 		
 		//update(st);
 		
@@ -64,20 +64,19 @@ public class A{
 		//String sql="select title,created_at,page_count from document where status='success' order by title desc limit 10";
 		//show(st, sql );
 		
-	  /*  int k = st.executeUpdate("INSERT INTO t2 (title2,text2) "
-	    		+ "VALUES ('abc2015年年终总结以及下年度工作计划', '这是一篇全文检索测试'),('ddjava葵花宝典', '好好学习'),"
-	    		+ "('cab中国English学习比赛example or demo', '上海东方明珠广播电视塔')");
+	    /*int k = st.executeUpdate("INSERT INTO t2 (_id,title2,text2) "
+	    		+ "VALUES ('100','添加id222', '这是一篇全文检索测试添加ID')");
 		System.out.println("num=="+k);*/
 		
 		/*int r = st.executeUpdate("update pages set page=(_source.page+5) where _id='8'");
 		System.out.println("===="+r);*/
 
-		/*int m = st.executeUpdate("delete from ordersDate");
-		System.out.println("===="+m);*/
+		int m = st.executeUpdate("delete from pages");
+		System.out.println("===="+m);
 		
 		
-		String sql = "select * from t2";
-		show(st, sql);
+		/*String sql = "select * from docsearch.pages";
+		show(st, sql);*/
 		con.close();
 	}
 	

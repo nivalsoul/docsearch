@@ -7,13 +7,15 @@
 <link rel="stylesheet" href="css/app-63b146b0.css">
 <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
 <script type="text/javascript" src="js/angular.min.js"></script>
+<script type="text/javascript" src="js/angular-sanitize.min.js"></script>
 <script type="text/javascript" src="js/angular-route.min.js"></script>
 <script type="text/javascript" src="js/ui-bootstrap-tpls.js"></script>
 <!-- <script type="text/javascript" src="js/ui-bootstrap.js"></script> -->
 <script type="text/javascript" src="js/angular-file-upload.min.js"></script>
 
 <script type="text/javascript">
-    var app = angular.module('myApp', ['ngRoute','ui.bootstrap','angularFileUpload']);
+    var app = angular.module('myApp', 
+    		['ngRoute','ngSanitize','ui.bootstrap','angularFileUpload']);
     
     app.config(function ($routeProvider) {
         $routeProvider.
@@ -24,6 +26,10 @@
         when('/home', {
             templateUrl: 'docManagement.html',
             controller: 'docManagementCtrl'
+        }).
+        when('/docView', {
+            templateUrl: 'docView.html',
+            controller: 'docViewCtrl'
         }).
         otherwise({
             redirectTo: '/search'
@@ -58,7 +64,9 @@
 </div>
 <script type="text/javascript" src="js/docCloudCtrl.js"></script>
 <script type="text/javascript" src="js/docManagement.js"></script>
+<script type="text/javascript" src="js/docView.js"></script>
 <script type="text/javascript" src="js/docCloudService.js"></script>
+<script type="text/javascript" src="js/pdfobject.min.js"></script>
 <script type="text/javascript">
 	
 </script>

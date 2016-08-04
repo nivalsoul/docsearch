@@ -1,9 +1,8 @@
 'use strict';
-angular.module('docSearchApp')
-    .controller('docViewCtrl', ['$scope',"$sce", '$window','$location', '$stateParams', 'docCloudService',
-        function ($scope, $sce, $window, $location, $stateParams, docCloudService) {
-            var token = keycloak.token;
-            $scope.docId = $stateParams.docId;
+app.controller('docViewCtrl',
+        function ($scope, $sce, $window, $location, docCloudService) {
+            var token = "";
+            $scope.docId = $location.search().docId;
             $scope.doc = {};
             $scope.totalPages = $location.search().totalPages;
             $scope.currentPage = $location.search().page;
@@ -19,7 +18,7 @@ angular.module('docSearchApp')
             $scope.imgTab={"heading":"缩略图", "active":false};
             $scope.txtTab={"heading":"文本内容", "active":false};
             $scope.tabIndex=1;
-            $scope.fileUrl = API_ENDPOINT_DOCDIVE + "/v1/docdive/documents/";
+            $scope.fileUrl = "/v1/docdive/documents/";
             $scope.fileName = "";
             $scope.pdfUrl = "";
             $scope.pdfLoaded = false;
@@ -247,4 +246,4 @@ angular.module('docSearchApp')
                 // }
             };
         }
-    ]);
+    );

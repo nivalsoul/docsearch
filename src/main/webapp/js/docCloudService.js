@@ -1,6 +1,6 @@
 //angular.module('docSearchApp2', [])
 app.factory('docCloudService',
-    function($http) {
+    function($http,$q) {
 
     return {
         saveDoc : function(token,data){

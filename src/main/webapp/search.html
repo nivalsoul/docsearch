@@ -19,7 +19,7 @@
         <!-- right -->
         <div class="col panel" ng-click="searchPageClick($event)" >
             <div class="panel-body">
-                <h4 class="text-center">{{selectedDept.deptname}}-所有文档</h4>
+                <h4 class="text-center">{{selectedDept.dept_name}}-所有文档</h4>
                 <!-- 搜索输入框 -->
                 <div class="searchInput"  ng-class="{'focus':inputIsFocus}">
                     <i class="fa fa-search"></i>
@@ -104,13 +104,13 @@
                 <div ng-repeat="doc in documents" style="margin-bottom: 20px">
                     <div class="col" style="width: 100px"
                          ng-click="selectDoc(doc)"  ng-dblclick="viewDoc(doc)" >
-                        <a ><img class="docView" ng-class="{'selected':doc.selected}" tooltip="双击打开新页面查看"
+                        <a ><img class="docView" ng-class="{'selected':doc.selected}" title="双击打开新页面查看"
                                  ng-src="{{fileUrl+doc._id+'/thumb_p1.png'}}" width="80">
                         </a>
                     </div>
                     <div class="col">
                         <h5 ng-click="selectDoc(doc)" style="cursor: pointer" ng-dblclick="viewDoc(doc)">
-                            <span style="font-weight: bold" tooltip="双击打开新页面查看" ng-bind-html="doc.title"></span>
+                            <span style="font-weight: bold" title="双击打开新页面查看" ng-bind-html="doc.title"></span>
                         </h5>
                         <p class="text-muted">
                             共<a ng-click="switchPages($index,doc._id,doc.page_count)" class=" m-l-5 m-r-5">{{doc.page_count}}</a>页-
