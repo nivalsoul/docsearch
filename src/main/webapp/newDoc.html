@@ -25,7 +25,7 @@
             <tr>
                 <td colspan="3" class="text-center" style="padding: 0">
                     <a ng-click="newUpload()" class="btn btn-default btn-lg" style="width: 100%;border: none"
-                       data-ng-disabled="!file.folder_id||!file.tenant_id">
+                       data-ng-disabled="!file.folder_id||!file.dept_id">
                         <i class="fa fa-plus m-r-5 text-info"></i>新增上传
                     </a></td>
             </tr>
@@ -106,10 +106,6 @@
         <div class="form-group clearfix">
             <label class="pull-left text-right" style="width: 80px">名称：<span class="text-danger">*</span></label>
             <div class="pull-left" style="width: 440px">
-                <!--<input id="fileName" class="form-control" placeholder="请输入1-128个字符的文件名称"
-                       cc-validate="" cc-validate-reg="^[\u4E00-\u9FA5\w-\d \.\d()（）]{1,128}$"
-                       cc-validate-errmsg="允许中文、字母、数字、空格、中英文小括号和.-_，长度在1-128之间"
-                       ng-model="file.title" cc-validate-model="file.title"> 问题多，不用了-->
                 <input id="fileName" class="form-control"  ng-model="file.title"
                        maxlength="128" placeholder="请输入1-128个字符的文件名称">
             </div>
@@ -123,10 +119,10 @@
             </div>
         </div>
         <div class="form-group clearfix">
-            <label class="pull-left text-right" style="width: 80px">租户：<span class="text-danger">*</span></label>
+            <label class="pull-left text-right" style="width: 80px">部门：<span class="text-danger">*</span></label>
             <div class="pull-left" style="width: 440px">
-                <select class="form-control" ng-model="file.tenant_id"
-                        ng-options="tenant.tenantId as tenant.tenantName for tenant in tenantArr">
+                <select class="form-control" ng-model="file.dept_id"
+                        ng-options="dept.deptid as dept.deptname for dept in deptArr">
                 </select>
             </div>
         </div>

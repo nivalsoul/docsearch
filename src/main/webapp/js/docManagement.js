@@ -154,7 +154,6 @@ app.controller('docManagementCtrl',
                 }
                 $uibModal.open({
                     templateUrl: 'newDoc.html',
-                    windowTemplateUrl: "newDoc.html",
                     size:'lg',
                     scope: $scope,
                     keyboard:false,
@@ -218,8 +217,9 @@ app.controller('docManagementCtrl',
             $scope.loadTenants=function(){
                 docCloudService.loadTenants(token)
                     .success(function(resp){
-                        $scope.tenantArr=resp;
-                        $scope.file.tenant_id=$scope.tenantArr[0].tenantId;
+                        $scope.deptArr=resp;
+                        console.log($scope.deptArr);
+                        $scope.file.dept_id=$scope.deptArr[0].deptid;
                     })
                     .error(function(){
                         alert("获取租户列表失败")
@@ -249,7 +249,7 @@ app.controller('docManagementCtrl',
                 $scope.file={
                     document_id: "",
                     folder_id: folder_id,
-                    tenant_id: "",
+                    dept_id: "",
                     title: "",
                     status: "",
                     description: "",
@@ -280,7 +280,7 @@ app.controller('docManagementCtrl',
                 $scope.fileArr.forEach(function(f){
                     var obj = {};
                     obj.document_id = f.document_id;
-                    obj.tenant_id = f.tenant_id;
+                    obj.dept_id = f.dept_id;
                     obj.category_id = f.folder_id;
                     obj.title = f.title;
                     obj.description = f.description;
@@ -394,7 +394,7 @@ app.controller('docManagementCtrl',
             var token = "";
             $scope.file = {};
             $scope.file._id = document._id;
-            $scope.file.tenant_id = document.tenant_id;
+            $scope.file.dept_id = document.dept_id;
             $scope.file.category_id = document.category_id;
             $scope.file.title = document.title;
             $scope.file.description = document.description;
@@ -402,7 +402,7 @@ app.controller('docManagementCtrl',
             $scope.loadTenants = function () {
                 docCloudService.loadTenants(token)
                     .success(function (resp) {
-                        $scope.tenantArr = resp;
+                        $scope.deptArr = resp;
                     })
                     .error(function () {
                         alert("获取租户列表失败")
@@ -428,7 +428,7 @@ app.controller('docManagementCtrl',
                 var f = $scope.file;
                 var data={};
                 data._id = f._id;
-                data.tenant_id = f.tenant_id;
+                data.dept_id = f.dept_id;
                 data.category_id = f.category_id;
                 data.title = f.title;
                 data.description = f.description;
