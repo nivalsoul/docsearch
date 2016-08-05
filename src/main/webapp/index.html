@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="css/vendor-3e4b16a7.css">
 <link rel="stylesheet" href="css/app-63b146b0.css">
 <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="js/jquery.cookie.js"></script>
 <script type="text/javascript" src="js/angular.min.js"></script>
 <script type="text/javascript" src="js/angular-sanitize.min.js"></script>
 <script type="text/javascript" src="js/angular-route.min.js"></script>
@@ -36,6 +37,7 @@
         });
     });
     
+    
     function showPage(url,obj){
     	$("ul.nav li").each(function(){
     		$(this).removeClass("active");
@@ -62,6 +64,7 @@
 <div id="main_content" ng-view>
  
 </div>
+<script type="text/javascript" src="js/login.js"></script>
 <script type="text/javascript" src="js/docCloudCtrl.js"></script>
 <script type="text/javascript" src="js/docManagement.js"></script>
 <script type="text/javascript" src="js/docView.js"></script>

@@ -2,6 +2,21 @@
 app.controller('docManagementCtrl', 
         function($scope,$http,$window,$uibModal,docCloudService) {
             var token="";
+            
+            $scope.needLogin=function(){
+            	$uibModal.open({
+                    templateUrl: 'login.html',
+                    size:'md',
+                    scope: $scope,
+                    keyboard:false,
+                    //backdrop:'static',
+                    controller:'loginCtrl',
+                    resolve: {
+                        
+                    }
+                });
+            }
+            
             $scope.folders=[];
             $scope.loadDoc=function(id){
                 docCloudService.loadDoc(token,id)
@@ -13,12 +28,18 @@ app.controller('docManagementCtrl',
                             }else{
                                 $scope.hasDoc = false;
                             }
+                        }else if(resp.code==401){
+                        	$scope.needLogin();
                         }else{
                             alert("获取文档列表失败"+resp.message)
                         }
 
                     }).error(function(resp){
-                        alert("获取文档列表出错"+resp.message)
+                    	if(resp.code==401){
+                        	$scope.needLogin();
+                        }else{
+                        	alert("获取文档列表出错"+resp.message)
+                        }
                     })
             };
             $scope.selectFolder=function(folder){
@@ -40,12 +61,18 @@ app.controller('docManagementCtrl',
                             if($scope.folders.length>0){
                             	$scope.selectFolder($scope.folders[0]);
                             }
+                        }else if(resp.code==401){
+                        	$scope.needLogin();
                         }else{
                             alert("获取文件夹失败"+resp.message)
                         }
                         console.log(resp)
                     }).error(function(resp){
-                        alert("获取文件夹失败"+resp.message)
+                    	if(resp.code==401){
+                        	$scope.needLogin();
+                        }else{
+                        	alert("获取文件夹失败"+resp.message)
+                        }
                     })
             };
             $scope.loadFolder();
@@ -66,11 +93,17 @@ app.controller('docManagementCtrl',
                             }else{
                                 $scope.hasDoc = false;
                             }
+                        }else if(resp.code==401){
+                        	$scope.needLogin();
                         }else{
                             alert("查询文档列表失败"+resp.message)
                         }
                     }).error(function(resp){
-                        alert("查询文档列表出错"+resp.message)
+                    	if(resp.code==401){
+                        	$scope.needLogin();
+                        }else{
+                        	alert("查询文档列表出错"+resp.message)
+                        }
                     })
             };
 

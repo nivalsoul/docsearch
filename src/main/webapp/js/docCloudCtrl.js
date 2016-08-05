@@ -1,6 +1,6 @@
 'use strict';
 app.controller('searchCtrl', 
-    function($scope,$window,docCloudService) {
+    function($scope,$window,$uibModal,docCloudService) {
         var token="keycloak.token";
         $(window).on('resize',window_resize);
         function window_resize(){
@@ -9,6 +9,19 @@ app.controller('searchCtrl',
         }
         window_resize();
 
+        $scope.needLogin=function(){
+        	$uibModal.open({
+                templateUrl: 'login.html',
+                size:'md',
+                scope: $scope,
+                keyboard:false,
+                //backdrop:'static',
+                controller:'loginCtrl',
+                resolve: {
+                	
+                }
+            });
+        }
         
         $scope.selectedDept=null;
         $scope.depts=[];
@@ -19,14 +32,19 @@ app.controller('searchCtrl',
                     if(resp.code==200){
                         $scope.depts=resp.data;
                         $scope.searchByTenant($scope.depts[0]);
-                    }
-                    else{
+                    }else if(resp.code==401){
+                    	$scope.needLogin();
+                    }else{
                         alert("获取部门列表失败"+resp.message)
                     }
 
                 })
                 .error(function(resp){
-                    alert("获取部门列表出错"+resp.message)
+                	if(resp.code==401){
+                    	$scope.needLogin();
+                    }else{
+                    	alert("获取部门列表出错"+resp.message)
+                    }
                 })
         };
         $scope.stats();
@@ -103,14 +121,19 @@ app.controller('searchCtrl',
                         }else{
                             $scope.hasDocs = true;
                         }
-                    }
-                    else{
+                    }else if(resp.code==401){
+                    	$scope.needLogin();
+                    }else{
                         alert("查询文档列表失败"+resp.message)
                     }
 
                 }).error(function(resp){
-                alert("查询文档列表出错"+resp.message)
-            })
+                	if(resp.code==401){
+                    	$scope.needLogin();
+                    }else{
+                    	alert("查询文档列表出错"+resp.message)
+                    }
+                })
         };
 
         //输入框回车搜索
