@@ -273,7 +273,7 @@ app.controller('searchCtrl',
             if(!doc){
                 return;
             }
-            var url = '#/docView?docId='+doc._id;
+            var url = 'docView.html?docId='+doc._id;
             if(viewType){
                 url += '&viewType='+viewType;
             }

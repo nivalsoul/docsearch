@@ -13,32 +13,13 @@
 <script type="text/javascript" src="js/ui-bootstrap-tpls.js"></script>
 <!-- <script type="text/javascript" src="js/ui-bootstrap.js"></script> -->
 <script type="text/javascript" src="js/angular-file-upload.min.js"></script>
-
+<script type="text/javascript" src="js/app.js"></script>
+<script type="text/javascript" src="js/login.js"></script>
+<script type="text/javascript" src="js/docCloudCtrl.js"></script>
+<script type="text/javascript" src="js/docManagement.js"></script>
+<script type="text/javascript" src="js/docCloudService.js"></script>
 <script type="text/javascript">
-    var app = angular.module('myApp', 
-    		['ngRoute','ngSanitize','ui.bootstrap','angularFileUpload']);
-    
-    app.config(function ($routeProvider) {
-        $routeProvider.
-        when('/search', {
-            templateUrl: 'search.html',
-            controller: 'searchCtrl'
-        }).
-        when('/home', {
-            templateUrl: 'docManagement.html',
-            controller: 'docManagementCtrl'
-        }).
-        when('/docView', {
-            templateUrl: 'docView.html',
-            controller: 'docViewCtrl'
-        }).
-        otherwise({
-            redirectTo: '/search'
-        });
-    });
-    
-    
-    function showPage(url,obj){
+    function showPage(obj){
     	$("ul.nav li").each(function(){
     		$(this).removeClass("active");
     	})
@@ -46,8 +27,8 @@
     }
 </script>
 </head>
-<body ng-app="myApp">
-<div class="container-fluid">
+<body ng-app="myApp" style="padding:10px 20px">
+<div class="container-fluid" style="margin:0">
 	<div class="row-fluid">
 		<div class="span12">
 			<ul class="nav nav-tabs">
@@ -64,14 +45,6 @@
 <div id="main_content" ng-view>
  
 </div>
-<script type="text/javascript" src="js/login.js"></script>
-<script type="text/javascript" src="js/docCloudCtrl.js"></script>
-<script type="text/javascript" src="js/docManagement.js"></script>
-<script type="text/javascript" src="js/docView.js"></script>
-<script type="text/javascript" src="js/docCloudService.js"></script>
-<script type="text/javascript" src="js/pdfobject.min.js"></script>
-<script type="text/javascript">
-	
-</script>
+
 </body>
 </html>

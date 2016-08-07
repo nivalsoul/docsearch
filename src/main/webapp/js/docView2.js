@@ -1,6 +1,5 @@
 'use strict';
-angular.module("docSearchApp", []).
-controller('docViewCtrl',["$scope", "$sce",'$window', '$location', 'docCloudService',
+app.controller('docViewCtrl',
         function ($scope, $sce, $window, $location, docCloudService) {
             var token = "";
             $scope.docId = $location.search().docId;
@@ -15,6 +14,9 @@ controller('docViewCtrl',["$scope", "$sce",'$window', '$location', 'docCloudServ
                 $scope.docId = 404;
             }
 
+            $scope.pdfTab={"heading":"预览PDF", "active":true};
+            $scope.imgTab={"heading":"缩略图", "active":false};
+            $scope.txtTab={"heading":"文本内容", "active":false};
             $scope.tabIndex=1;
             $scope.fileUrl = "/v1/docdive/documents/";
             $scope.fileName = "";
@@ -27,6 +29,8 @@ controller('docViewCtrl',["$scope", "$sce",'$window', '$location', 'docCloudServ
                 $scope.txtTab.active=true;
             }
 
+            $scope.loading = 'loading';
+
             $scope.getDocument = function (docId) {
                 docCloudService.getDocument(token, docId)
                     .success(function (resp) {
@@ -38,10 +42,11 @@ controller('docViewCtrl',["$scope", "$sce",'$window', '$location', 'docCloudServ
                                 $scope.fileName = $scope.doc.title;
                             $scope.pdfUrl = $scope.fileUrl + $scope.docId + "/"
                                 + $scope.fileName.replace("."+$scope.doc.format, ".pdf");
+                            $scope.pdfURL = $scope.pdfUrl;
 
                             $scope.showContent();
                         }else {
-                            alert("获取文档失败" + resp.message);
+                            notificationService.error("获取文档失败" + resp.message);
                             $scope.pdfURL = $scope.fileUrl + $scope.docId + "/404.pdf";
                             $scope.doc.pages = [{"page":1,"text":"404"}];
                             $scope.totalPages = 1;
@@ -49,7 +54,7 @@ controller('docViewCtrl',["$scope", "$sce",'$window', '$location', 'docCloudServ
                         }
                     })
                     .error(function (resp) {
-                        alert("获取文档出错" + resp.message);
+                        notificationService.error("获取文档出错" + resp.message);
                     });
             };
             $scope.getDocument($scope.docId);
@@ -75,8 +80,8 @@ controller('docViewCtrl',["$scope", "$sce",'$window', '$location', 'docCloudServ
             $scope.selectPage=function (item) {
                 $scope.currentPage = item.page;
                 $scope.tabIndex = 1;
-                //$scope.showContent();
-                $scope.pdfCurrentPage = $scope.currentPage;
+                $scope.pdfTab.active=true;
+                $scope.showContent();
             }
 
             $scope.switchTab = function (i) {
@@ -86,7 +91,8 @@ controller('docViewCtrl',["$scope", "$sce",'$window', '$location', 'docCloudServ
 
             $scope.showContent=function () {
                 if($scope.tabIndex==1){
-                    $scope.loadPDF($scope.pdfUrl);
+                    //$scope.loadPDF($scope.pdfURL);
+                    $scope.loadPDF2();
                 }else if($scope.tabIndex==2){
 
                 }else if($scope.tabIndex==3){
@@ -98,20 +104,35 @@ controller('docViewCtrl',["$scope", "$sce",'$window', '$location', 'docCloudServ
             $scope.loadText = function () {
                 $("#pageText").load($scope.fileUrl + $scope.docId + "/p" + $scope.currentPage + ".txt");
             }
-            
-            $scope.myobj=null;
-            
-            ///////******angular-pdf-viewer*****//////
+
+            $scope.loadPDF2 = function () {
+                // if($scope.pdfLoaded)
+                //     return;
+                $scope.pdfOptions = {
+                    pdfOpenParams: {
+                        pagemode: "thumbs",
+                        navpanes: 0,
+                        toolbar: 0,
+                        statusbar: 0,
+                        page: $scope.currentPage,
+                        view: "FitV"
+                    }
+                };
+                var myPDF = PDFObject.embed($scope.pdfURL, "#pdf", $scope.pdfOptions);
+                $scope.pdfLoaded = true;
+            }
+
+
             $scope.isLoading = false;
             $scope.downloadProgress = 0;
 
             $scope.pdfZoomLevels = [];
             $scope.pdfViewerAPI = {};
-            $scope.pdfScale = 2;
+            $scope.pdfScale = 1;
             $scope.pdfURL = "";
             $scope.pdfFile = null;
             $scope.pdfTotalPages = 0;
-            $scope.pdfCurrentPage = 1;
+            $scope.pdfCurrentPage = 0;
             $scope.pdfSearchTerm = "";
             $scope.pdfSearchResultID = 0;
             $scope.pdfSearchNumOccurences = 0;
@@ -174,7 +195,7 @@ controller('docViewCtrl',["$scope", "$sce",'$window', '$location', 'docCloudServ
 
             $scope.loadPDF = function (pdfURL) {
                 if($scope.pdfURL === pdfURL) {
-                   return;
+                    return;
                 }
 
                 $scope.isLoading = true;
@@ -224,7 +245,5 @@ controller('docViewCtrl',["$scope", "$sce",'$window', '$location', 'docCloudServ
                 //     $scope.loadPDF("pdf/demo_large.pdf");
                 // }
             };
-           
-            
         }
-    ]);
+    );

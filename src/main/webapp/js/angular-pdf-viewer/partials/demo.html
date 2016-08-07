@@ -1,0 +1,139 @@
+<style>
+	body {
+		font-family: sans-serif;
+	}
+
+	pdf-viewer {
+		position: absolute;
+		top: 75px;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		overflow: auto;
+		background-color: #cccccc;
+		height:100%;
+		width:80%;
+	}
+
+	#loader {
+		position: fixed;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		overflow: hidden;
+		background-color: #ffffff;
+		z-index: 1000;
+	}
+
+	#loader div {
+		margin-top: 50px;
+		text-align: center;
+	}
+
+	#loader .progress-bar {
+		margin: 5px auto;
+	}
+
+	.progress-bar {
+		width: 200px;
+		height: 30px;
+		border: 1px solid #888888;
+		background-color: #ffffff;
+		overflow: hidden;
+	}
+	
+	.progress-bar span.bar {
+		display: inline-block;
+		background-color: #dddddd;
+		height: 100%;
+		text-align: left;
+	}
+	
+	.zoom_wrapper,
+	.select_page_wrapper,
+	.demos_wrapper,
+	.load_file_wrapper,
+	.search_wrapper,
+	.print_wrapper {
+		display: inline-block;
+		margin: 3px 10px;
+	}
+	
+	.select_page_wrapper input[type="text"] {
+		width: 40px;
+		text-align: center;
+	}
+	
+	.demos_wrapper {
+		float: right;
+	}
+	
+	#toolbar {
+		border-bottom: 1px solid black;
+		height: 30px;
+		box-sizing: border-box;
+	}
+</style>
+
+<div id="loader" data-ng-show="isLoading">
+	<div>Loading...</div>
+	<div class="progress-bar">
+		<span class='bar' data-ng-style='{width: downloadProgress + "%"}'></span>
+	</div>
+</div>
+
+<div id="toolbar">
+	<div class="zoom_wrapper">
+		<button data-ng-click="zoomOut()">-</button>
+		<select 
+			data-ng-model="pdfScale" 
+			data-ng-change="onPDFZoomLevelChanged()"
+			data-ng-options="zoom.value as zoom.label for zoom in pdfZoomLevels" >
+		</select>
+		<button data-ng-click="zoomIn()">+</button>
+	</div>
+
+	<div class="select_page_wrapper">
+		<span>Page:</span>
+		<input type="text" data-ng-model="pdfCurrentPage" data-ng-change="onPDFPageChanged()"/> 
+		<span>of {{pdfTotalPages}}</span>
+	</div>
+
+	<!-- <div class="load_file_wrapper">
+		<input id="file_input" type="file" onchange="angular.element(this).scope().onPDFFileChanged()" accept=".pdf" />
+	</div> -->
+
+	<div class="search_wrapper">
+		<form data-ng-submit="findNext()" style="display: inline-block;">
+			<input type="text" data-ng-model="pdfSearchTerm" placeholder="Search..."/>
+		</form>
+		<span data-ng-show="pdfSearchTerm !== ''">{{pdfSearchResultID}} of {{pdfSearchNumOccurences}}</span>
+		<button data-ng-click="findPrev()">上一个</button>
+		<button data-ng-click="findNext()">下一个</button>
+	</div>
+<!--
+	<div class="print_wrapper">
+		<button data-ng-click="printPDF()">Print PDF</button>
+	</div>
+-->
+	<!-- <div class="demos_wrapper">
+		<span>Demo:</span>
+		<button data-ng-click="switchToPDF(0)">Small (13kB)</button>
+		<button data-ng-click="switchToPDF(1)">Large (1MB)</button>
+	</div> -->
+</div>
+
+<pdf-viewer 
+	data-src="{{pdfURL}}"
+	data-file="pdfFile"
+	data-current-page="pdfCurrentPage"
+	data-initial-scale="fit_page"
+	data-api="pdfViewerAPI"
+	data-render-text-layer="true"
+	data-progress-callback="onPDFProgress(operation, state, value, total, message)"
+	data-password-callback="onPDFPassword(reason)"
+	data-search-term="{{pdfSearchTerm}}"
+	data-search-result-id="pdfSearchResultID"
+	data-search-num-occurences="pdfSearchNumOccurences">
+</pdf-viewer>
