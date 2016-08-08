@@ -21,9 +21,9 @@
             <div class="panel-body">
                 <h4 class="text-center">{{selectedDept.dept_name}}-所有文档</h4>
                 <!-- 搜索输入框 -->
-                <div class="searchInput"  ng-class="{'focus':inputIsFocus}">
+                <div class="searchInput"  ng-class="{'focus':inputIsFocus}" style="position: relative;">
                     <i class="fa fa-search"></i>
-                    <div id="searchDiv" class="clearfix" style="padding: 5px 0;">
+                    <div id="searchDiv" class="clearfix" style="padding: 5px 0;" ng-click="myclick()">
                         <div class="searchTag" ng-class="{'tag_selected':item.selected}"
                              ng-repeat="item in inputTagArr" >
                             <a ng-click="removeTag(item.id)"> <i class="fa fa-times-circle"></i></a>
@@ -36,18 +36,19 @@
                         </div>
                         <input class="noborderInput font-14" ng-model="mainInput" id="mainInput"
                                style="width: 98%; font-family: 宋体;" ng-show="showMainInput==true"
-                               ng-click="inputFocus()" ng-dblclick="showFilter=false" ng-keyup="searchByCnd($event)">
+                               ng-click="inputFocus()" ng-dblclick="showFilter=false" ng-keyup="searchByCnd($event)"
+                               placeholder="请点击这里...">
                     </div>
-                    <a style="position: absolute;right: 30px;top: 65px;" ng-click="clearTags()"> <i class="fa fa-times"></i></a>
+                    <a style="position: absolute;right: 10px;top: 6px;" ng-click="clearTags()"> <i class="fa fa-times"></i></a>
                 </div>
 
                 <!-- 搜索弹出菜单 -->
-                <div class="filterBox" ng-show="showFilter==true">
+                <div class="filterBox" ng-show="showFilter==true" >
                     <ul>
-                        <li ng-click="chooseKey('title','标题')"><a href="#">标题</a></li>
-                        <li ng-click="chooseKey('text','内容')"><a href="#">内容</a></li>
-                        <li ng-click="chooseKey('user_name','用户名')"><a href="#">用户名</a></li>
-                        <li ng-click="chooseKey('description','描述')"><a href="#">描述</a></li>
+                        <li ng-click="chooseKey('title','标题')"><a href="javascript:void(0)">标题</a></li>
+                        <li ng-click="chooseKey('text','内容')"><a href="javascript:void(0)">内容</a></li>
+                        <li ng-click="chooseKey('user_name','用户名')"><a href="javascript:void(0)">用户名</a></li>
+                        <li ng-click="chooseKey('description','描述')"><a href="javascript:void(0)">描述</a></li>
                     </ul>
                 </div>
 
@@ -57,19 +58,19 @@
                     <div class="btn-group m-r-10">
                         <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false">
-                            排序 <i class="fa fa-chevron-down m-l-10"></i>
+                           	 排序 <i class="fa fa-chevron-down m-l-10"></i>
                         </button>
                         <ul class="dropdown-menu" id="orderSelect">
                             <li class="active">
-                                <a href="#" ng-click="setOrder('created_at',$event)">
+                                <a href="javascript:void(0)" ng-click="setOrder('created_at',$event)">
                                     <span style="margin-right: 20px">按上传时间</span>
                                     <span id="orderIcon" class="glyphicon glyphicon-arrow-up"></span>
                                 </a>
                             </li>
-                            <li><a href="#" ng-click="setOrder('title',$event)">
+                            <li><a href="javascript:void(0)" ng-click="setOrder('title',$event)">
                                 <span style="margin-right: 20px">按名称</span>
                             </a></li>
-                            <li><a href="#" ng-click="setOrder('page_count',$event)">
+                            <li><a href="javascript:void(0)" ng-click="setOrder('page_count',$event)">
                                 <span style="margin-right: 20px">按页数</span>
                             </a></li>
                         </ul>
@@ -77,20 +78,20 @@
                     <div class="btn-group m-r-10">
                         <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false">
-                            分析 <i class="fa fa-chevron-down m-l-10"></i>
+                            	分析 <i class="fa fa-chevron-down m-l-10"></i>
                         </button>
                         <ul class="dropdown-menu">
-                            <li><a href="#" data-ng-disabled="true">查看时间线</a></li>
-                            <li><a href="#" data-ng-disabled="true">查看entities</a></li>
+                            <li><a href="javascript:void(0)" data-ng-disabled="true">查看时间线</a></li>
+                            <li><a href="javascript:void(0)" data-ng-disabled="true">查看entities</a></li>
                         </ul>
                     </div>
                     <div class="btn-group">
                         <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false">
-                            保存 <i class="fa fa-chevron-down m-l-10"></i>
+                           	 保存 <i class="fa fa-chevron-down m-l-10"></i>
                         </button>
                         <ul class="dropdown-menu">
-                            <li><a href="#" ng-click="downloadFile()">另存为</a></li>
+                            <li><a href="javascript:void(0)" ng-click="downloadFile()">另存为</a></li>
                         </ul>
                     </div>
                     <!--<div class="btn-group  pull-right">

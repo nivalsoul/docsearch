@@ -412,8 +412,12 @@ app.controller('searchCtrl',
 
         $scope.inputFocus = function(){
             var left = document.getElementById("mainInput").offsetLeft;
-            angular.element(".filterBox").css("left",left);
+            angular.element(".filterBox").css("left",left+190);
         };
+        
+        $scope.myclick=function(){
+        	//$("#mainInput").click();
+        }
 
     })
  
